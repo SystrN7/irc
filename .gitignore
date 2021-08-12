@@ -1,0 +1,11 @@
+# IDE
+.vscode
+
+# Binary
+*.o
+bin
+
+ircserv
+
+
+# Test (Temps)
