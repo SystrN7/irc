@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 13:02:18 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/13 15:31:54 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/13 17:05:16 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ class Socket
 		Socket&			operator=(Socket& object);
 
 	public:
-		Socket(const unsigned short port = 80, const char *address = "0.0.0.0");
+		Socket(const unsigned short port = 194, const char *address = "0.0.0.0");
 		virtual ~Socket();
 		
 

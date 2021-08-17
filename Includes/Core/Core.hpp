@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 14:48:40 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/07/22 16:40:58 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/17 15:05:03 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include <string>
 #include <iostream>
+#include <sstream>
 
 #include "Core/ConnectionManager.hpp"
 
@@ -28,7 +29,7 @@ class Core
 	private:
 		Core();
 	public:
-		Core(string config_file_name);
+		Core(const string port, const string password, const string existing_network = "");
 		~Core();
 	
 	/* Operator */
