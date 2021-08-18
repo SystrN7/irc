@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:52:50 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/07/28 12:48:42 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/18 12:49:23 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void		ConnectionManager::monitorFileDescriptor()
 	{
 		if (select(FD_SETSIZE, &this->_read_fds, &this->_write_fds, NULL, NULL) <= 0)
 			throw std::exception();
+		
 		// Check socket 
 		for (list<Socket *>::iterator it = this->_registred_socket.begin(); it != this->_registred_socket.end(); it++)
 		{
@@ -85,22 +86,22 @@ void		ConnectionManager::monitorFileDescriptor()
 				FD_SET(connection->_fd, &this->_write_fds);
 			}
 		}
+
 		// Check Connection reading / writing
 		for (list<Connection *>::iterator it = this->_registred_connection.begin(); it != this->_registred_connection.end(); it++)
 		{
+			// Reading
 			if (FD_ISSET((*it)->_fd, &this->_read_fds))
 			{
 				cout << "[<]-(Client)-Recive Data" << endl;
 				cout << (*it)->receiveData() << endl;
 				(*it)->printInfo();
 			}
-
 			
-
+			// Writing
 			if(FD_ISSET((*it)->_fd, &this->_write_fds))
 			{
 				cout << "[>]-(Client)-Send Data." << endl;
-
 				(*it)->printInfo();
 				cout << "size of : " << content.size() << endl;
 				(*it)->sendData(content.c_str() , content.size());
@@ -116,4 +117,3 @@ void		ConnectionManager::monitorFileDescriptor()
 		this->monitorConnection();
 	}
 }
-

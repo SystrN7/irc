@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:23:06 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/13 15:45:47 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/18 13:55:18 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@ Connection::~Connection(void)
 
 void	Connection::printInfo()
 {
-	printf("IP address is: %s\n", inet_ntoa(this->_client_address.sin_addr));
-	printf("Port is: %d\n", (int) ntohs(this->_client_address.sin_port));
+	Logging::Debug("Client IP : ");
+	Logging::Debug("Client Port : ");
+	// printf("IP address is: %s\n", inet_ntoa(this->_client_address.sin_addr));
+	// printf("Port is: %d\n", (int) ntohs(this->_client_address.sin_port));
 }
-
-// ! remove later
-#include <exception>
 
 int		Connection::sendData(const char *buffer, int lenght)
 {
@@ -33,33 +32,21 @@ int		Connection::sendData(const char *buffer, int lenght)
 
 	status = send(this->_fd, buffer, lenght, 0);
 	if (status < 0)
-		throw exception();
-	
+		Logging::SystemError("[Connection] - The server fails to send data to the client");
 	return (status);
 }
 
-#include <cstring>
-
-#include <iostream>
-
-char	*Connection::receiveData()
+string	*Connection::receiveData()
 {
-	int		lenght = 1024 - 1;
-	char		buffer[1024];
-	char		*result;
+	int		lenght = 512;
+	char	buffer[512] = {0};
 
 	lenght = recv(this->_fd, buffer, lenght, 0);
-	std::cout << lenght << std::endl;
 	if (lenght < 0)
 	{
-		perror("Error: ");
+		Logging::SystemError("[Connection] - Server faild to read client send data");
 		return (NULL);
 	}
 	
-	buffer[lenght] = '\0';
-	
-	result = new char[lenght + 1];
-	strcpy(result, buffer);
-
-	return (result);
+	return (new string(buffer, lenght));
 }

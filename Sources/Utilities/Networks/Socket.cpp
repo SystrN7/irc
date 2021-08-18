@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 12:48:57 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/13 15:33:06 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/17 16:46:28 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,24 @@ Socket::Socket(const unsigned short port, const char *address)
 
 	protocol = getprotobyname("tcp");
 	if (protocol == NULL)
-		Logging::Fatal("[Socket](Creation)-Protocol Not found.");
+		Logging::SystemFatal("[Socket](Creation)-Protocol Not found");
 
 	this->fd_socket = socket(PF_INET, SOCK_STREAM, protocol->p_proto);
 	if (this->fd_socket < 0)
-		Logging::Fatal("[Socket](Creation)-Cannot create socket.");
+		Logging::SystemFatal("[Socket](Creation)-Cannot create socket");
 
 	// if (fcntl(this->fd_socket, F_SETFL, O_NONBLOCK) < 0)
-	// 	Logging::Fatal("[Socket](Creation)-Cannot change fd to non-block state.");
+	// 	Logging::SystemFatal("[Socket](Creation)-Cannot change fd to non-block state");
 
 	inet_aton(address, &this->socket_settings.sin_addr);
 	this->socket_settings.sin_family = AF_INET;
 	this->socket_settings.sin_port = htons(port);
 
 	if (bind(this->fd_socket, reinterpret_cast<struct sockaddr *>(&socket_settings), sizeof(socket_settings)))
-		Logging::Fatal("[Socket](Binding)-Socket binding faild.");
+		Logging::SystemFatal("[Socket](Binding)-Socket binding faild");
 	
 	if (listen(this->fd_socket, 1024))
-		Logging::Fatal("[Socket](Listening)-Socket faild to listen port.");
+		Logging::SystemFatal("[Socket](Listening)-Socket faild to listen port");
 }
 
 Socket::~Socket()
@@ -53,6 +53,6 @@ Connection		*Socket::getConnection()
 
 	fd = accept(this->fd_socket, reinterpret_cast<struct sockaddr *>(&client_address), &client_address_size);
 	if (fd < 0)
-		Logging::Error("[Socket](Connection)-Faild to initialize client connection.");
+		Logging::SystemError("[Socket](Connection)-Faild to initialize client connection");
 	return (new Connection(fd, client_address));
 }

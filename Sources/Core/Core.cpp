@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 14:45:07 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/17 15:04:29 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/17 15:19:54 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ Core::Core(const string port, const string password, const string existing_netwo
 
 	cout << "Socket Initialisation :";
 	ConnectionManager Network;
-	Socket*	socket = new Socket();
+	Socket*	socket = new Socket(port_number);
 	Network.registerSocket(socket);
 	cout << "					[\033[32m OK \033[0m]" << endl;
 
