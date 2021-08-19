@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:23:06 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/18 13:55:18 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/19 19:04:15 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,19 @@ void	Connection::printInfo()
 	// printf("Port is: %d\n", (int) ntohs(this->_client_address.sin_port));
 }
 
-int		Connection::sendData(const char *buffer, int lenght)
+int		Connection::sendResponce(Responce &message)
 {
 	ssize_t		status;
 
-	status = send(this->_fd, buffer, lenght, 0);
+	status = send(this->_fd, message.getMessage().c_str(), message.getMessage().size(), 0);
 	if (status < 0)
 		Logging::SystemError("[Connection] - The server fails to send data to the client");
 	return (status);
 }
 
-string	*Connection::receiveData()
+Request *Connection::receiveRequest()
 {
+	// ! USE gnl to make it great aigain
 	int		lenght = 512;
 	char	buffer[512] = {0};
 
@@ -48,5 +49,7 @@ string	*Connection::receiveData()
 		return (NULL);
 	}
 	
-	return (new string(buffer, lenght));
+	return (
+		new Request(*this ,string(buffer, lenght))
+	);
 }

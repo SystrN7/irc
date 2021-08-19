@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 13:02:18 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/13 17:05:16 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/19 18:10:13 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,13 @@
 
 #include "Connection.hpp"
 
-#include <arpa/inet.h>
-
 #include <sys/socket.h>
-#include <sys/types.h>
-
+#include <arpa/inet.h>
 #include <netdb.h>
+
 #include <fcntl.h>
-#include <unistd.h>
-#include <netinet/in.h>
-
-#include <cstdlib>
-#include <cstdio>
-#include <cstring>
-
-#include <errno.h>
 
 #include <string>
-
-#include <exception>
 
 using namespace std;
 

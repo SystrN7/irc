@@ -6,7 +6,7 @@
 #    By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/03 15:18:41 by fgalaup           #+#    #+#              #
-#    Updated: 2021/08/13 14:13:57 by fgalaup          ###   ########lyon.fr    #
+#    Updated: 2021/08/19 17:02:31 by fgalaup          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,12 +31,22 @@ HEADERS_FILES	:=	IRC.hpp \
 					Core/Core.hpp \
 					Core/Logging.hpp \
 					Core/ConnectionManager.hpp \
+					Resources/Chanel.hpp \
+					Resources/Client.hpp \
+					Resources/Message.hpp \
+					Resources/Request.hpp \
+					Resources/Responce.hpp \
 					Utilites/Networks/Socket.hpp \
 					Utilites/Networks/Connection.hpp
 
 SOURCE_FILES	:=	Core/Core.cpp \
 					Core/Logging.cpp \
 					Core/ConnectionManager.cpp \
+					Resources/Chanel.cpp \
+					Resources/Client.cpp \
+					Resources/Message.cpp \
+					Resources/Request.cpp \
+					Resources/Responce.cpp \
 					Utilities/Networks/Socket.cpp \
 					Utilities/Networks/Connection.cpp
 

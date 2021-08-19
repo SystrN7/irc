@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:52:50 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/19 15:27:49 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/19 19:18:52 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 ConnectionManager::ConnectionManager(void):
 	_registred_socket(),
 	_registred_connection(),
+	_sendQueue(),
 	_read_fds(),
-	_write_fds(),
-	_read_fd_count(0),
-	_write_fd_count(0)
+	_write_fds()
 {
 	FD_ZERO(&this->_read_fds);
 	FD_ZERO(&this->_write_fds);
@@ -42,42 +41,32 @@ void	ConnectionManager::registerConnection(Connection *connection)
 
 void	ConnectionManager::monitorSocket()
 {
-	this->_read_fd_count = 0;
 	for (list<Socket *>::iterator it = this->_registred_socket.begin(); it != this->_registred_socket.end(); it++)
-	{
 		FD_SET((*it)->fd_socket, &this->_read_fds);
-		this->_read_fd_count++;
-	}
 }
 
-void	ConnectionManager::monitorConnection()
+void	ConnectionManager::addResponceToSendQueue(Responce *responce)
 {
-	// Wait full request befor reading bloking durring reading (wait end file signal)
+	// Register file descriptor to write monitored fd
+	FD_SET(responce->getConnection()._fd, &this->_write_fds);
 
-	// Wait availability befor writing to avoid bloking durring writing
+	this->_sendQueue.push_back(responce);
 }
 
 #include <iostream>
 #include <fstream>
 #include <sstream>
 
-void		ConnectionManager::monitorFileDescriptor()
+Request		*ConnectionManager::NetworkActivitiesHandler()
 {
-	this->monitorSocket();
-
-		ifstream ifs("./messges.irc");
-		string content( (istreambuf_iterator<char>(ifs) ),
-				(istreambuf_iterator<char>()));
-
 	while (0 == 0)
 	{
 		if (select(FD_SETSIZE, &this->_read_fds, &this->_write_fds, NULL, NULL) <= 0)
 			Logging::SystemFatal("[Select]-Fd monitoring failed");
 		
-		// Check socket 
+		// Check socket (incoming connection)
 		for (list<Socket *>::iterator it = this->_registred_socket.begin(); it != this->_registred_socket.end(); it++)
 		{
-			cout << "Socket" << endl;
 			if (FD_ISSET((*it)->fd_socket, &this->_read_fds))
 			{
 				cout << "[+]-[Connection](Client)-New client request." << endl;
@@ -87,37 +76,33 @@ void		ConnectionManager::monitorFileDescriptor()
 				// FD_SET(connection->_fd, &this->_write_fds);
 			}
 		}
-		cout << "test" << endl;
-		// Check Connection reading / writing
+
+		// Check incoming Request (reading)
 		for (list<Connection *>::iterator it = this->_registred_connection.begin(); it != this->_registred_connection.end(); it++)
 		{
-			cout << "Connection" << endl;
-			// Reading
 			if (FD_ISSET((*it)->_fd, &this->_read_fds))
 			{
-				cout << "[<]-(Client)-Recive Data" << endl;
-				cout << *(*it)->receiveData() << endl;
-				// Writing
-				// if(FD_ISSET((*it)->_fd, &this->_write_fds))
-				// {
-					cout << "[>]-(Client)-Send Data." << endl;
-					cout << "Send: " << content << endl;
-					cout << "size of : " << content.size() << endl;
-					(*it)->sendData(content.c_str() , content.size());
-					// FD_SET((*it)->_fd, &this->_read_fds);
-					// // FD_SET((*it)->_fd, &this->_write_fds);
-					// FD_CLR((*it)->_fd, &this->_write_fds);
-					// FD_CLR((*it)->_fd, &this->_read_fds);
-
-					// delete (*it);
-					// this->_registred_connection.remove(*it);
-					// it = this->_registred_connection.begin();
-				// }
+				cout << "[<]-(Client)-Recive Request" << endl;
+				return ((*it)->receiveRequest());
 			}
-			
 		}
 
-		// this->monitorSocket();
-		// this->monitorConnection();
+		// Check Sending Queue (Write)
+		for (list<Responce *>::iterator it = this->_sendQueue.begin(); it != this->_sendQueue.end(); it++)
+		{
+			if(FD_ISSET((*it)->getConnection()._fd, &this->_write_fds))
+			{
+				cout << "[>]-(Server)-Send Messages." << endl;
+				(*it)->getConnection().sendResponce(**it);
+
+				FD_CLR((*it)->getConnection()._fd, &this->_write_fds);
+				this->_sendQueue.remove((*it));
+
+				// ? To Move : Unregister Connected fd add function for connection reset by client
+				// delete (*it);
+				// this->_registred_connection.remove(*it);
+				// it = this->_registred_connection.begin();
+			}
+		}
 	}
 }

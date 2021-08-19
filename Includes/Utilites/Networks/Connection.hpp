@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:47:10 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/18 13:55:13 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/19 17:31:46 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 #include "Core/Logging.hpp"
 
+#include "Resources/Request.hpp"
+#include "Resources/Responce.hpp"
+
 #include <unistd.h>
 #include <sys/socket.h>
-// #include <sys/select.h>
-// #include <sys/stat.h>
 
 #include <arpa/inet.h>
 
@@ -42,8 +43,8 @@ class Connection
 		~Connection(void);
 
 		void	printInfo();
-		string	*receiveData();
-		int		sendData(const char *buffer, int lenght);
+		Request *receiveRequest();
+		int	sendResponce(Responce &message);
 	
 	friend class ConnectionManager;
 };

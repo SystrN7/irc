@@ -1,41 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Message.hpp                                        :+:      :+:    :+:   */
+/*   Responce.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/19 16:35:09 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/19 19:20:11 by fgalaup          ###   ########lyon.fr   */
+/*   Created: 2021/08/19 16:35:46 by fgalaup           #+#    #+#             */
+/*   Updated: 2021/08/19 19:19:41 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <string>
-
-// #include "Utilites/Networks/Connection.hpp"
-
-using namespace std;
-
+#include "Message.hpp"
+#include "Utilites/Networks/Connection.hpp"
 class Connection;
 
-class Message
+class Responce: public Message
 {
-	protected:
-		Connection	&_clientConnection;
-		string		_message;
-	
 	// Constructor & desctructor
 	private:
-		Message();
-		Message(const Message &copy);
-		Message &operator=(const Message &copy);
+		Responce();
+		Responce(const Responce &copy);
+		Responce &operator=(const Responce &copy);
 	public:
-		Message(Connection &client, string message);
-		virtual ~Message();
+		Responce(Connection &client, string message): Message(client, message) {}
+		virtual ~Responce() {}
 	
 	// Setter Getter
-	Connection	&getConnection() { return (this->_clientConnection); }
-	string		&getMessage() { return (this->_message); }
+	Connection			&getConnection() { return (this->_clientConnection); }
+	virtual string		&getMessage() { return (this->_message); }
 };

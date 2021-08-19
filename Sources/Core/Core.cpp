@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 14:45:07 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/17 15:19:54 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/19 19:23:26 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,27 @@ Core::Core(const string port, const string password, const string existing_netwo
 	ConnectionManager Network;
 	Socket*	socket = new Socket(port_number);
 	Network.registerSocket(socket);
+	Network.monitorSocket();
 	cout << "					[\033[32m OK \033[0m]" << endl;
 
 	cout << "Connection Manager starting :";
 	cout << "				[\033[31m KO \033[0m]" << endl;
 	Logging::Info("server is ready. waiting client request !");
-	Network.monitorFileDescriptor();
+	
+	while (7 == 7)
+	{
+		Request *request = Network.NetworkActivitiesHandler();
+		cout << "Recive :" << request->getMessage() << endl;
+
+		// Request Processing (Il faut que tu ecrive ici mr seb si tu veux fair le traitement des request)
+
+		Responce *test = new Responce(request->getConnection(), string(":localhost\\80 001 fgalaup :Welcome to the Internet Relay Chat\n"));
+		// End Request Processing
+
+		Network.addResponceToSendQueue(test);
+		delete test;
+		delete request;
+	}
 
 }
 
