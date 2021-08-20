@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ConnectionManager.cpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:52:50 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/19 19:18:52 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/20 14:34:10 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	ConnectionManager::addResponceToSendQueue(Responce *responce)
 	// Register file descriptor to write monitored fd
 	FD_SET(responce->getConnection()._fd, &this->_write_fds);
 
+	std::cout << "RESPONCE ADDED TO QUEUE" << std::endl;
+
 	this->_sendQueue.push_back(responce);
 }
 
@@ -61,8 +63,10 @@ Request		*ConnectionManager::NetworkActivitiesHandler()
 {
 	while (0 == 0)
 	{
+		std::cout << "Before Select" << std::endl;
 		if (select(FD_SETSIZE, &this->_read_fds, &this->_write_fds, NULL, NULL) <= 0)
 			Logging::SystemFatal("[Select]-Fd monitoring failed");
+		std::cout << "After Select" << std::endl;
 		
 		// Check socket (incoming connection)
 		for (list<Socket *>::iterator it = this->_registred_socket.begin(); it != this->_registred_socket.end(); it++)
@@ -88,7 +92,9 @@ Request		*ConnectionManager::NetworkActivitiesHandler()
 		}
 
 		// Check Sending Queue (Write)
-		for (list<Responce *>::iterator it = this->_sendQueue.begin(); it != this->_sendQueue.end(); it++)
+		list<Responce *>::iterator it = this->_sendQueue.begin();
+		list<Responce *>::iterator ite = this->_sendQueue.end();
+		while (it != ite)
 		{
 			if(FD_ISSET((*it)->getConnection()._fd, &this->_write_fds))
 			{
@@ -98,11 +104,32 @@ Request		*ConnectionManager::NetworkActivitiesHandler()
 				FD_CLR((*it)->getConnection()._fd, &this->_write_fds);
 				this->_sendQueue.remove((*it));
 
+				it = this->_sendQueue.begin();
+				ite = this->_sendQueue.end();
+			}
+			it++;
+		}
+
+/*
+		for (list<Responce *>::iterator it = this->_sendQueue.begin(); it != this->_sendQueue.end(); it++)
+		{
+
+			if(FD_ISSET((*it)->getConnection()._fd, &this->_write_fds))
+			{
+				cout << "[>]-(Server)-Send Messages." << endl;
+				(*it)->getConnection().sendResponce(**it);
+
+				FD_CLR((*it)->getConnection()._fd, &this->_write_fds);
+				this->_sendQueue.remove((*it));
+				//it = this->_sendQueue.begin();
+				
+				
 				// ? To Move : Unregister Connected fd add function for connection reset by client
 				// delete (*it);
 				// this->_registred_connection.remove(*it);
 				// it = this->_registred_connection.begin();
 			}
 		}
+*/
 	}
 }
