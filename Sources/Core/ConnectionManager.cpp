@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ConnectionManager.cpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:52:50 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/20 14:34:10 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/23 13:58:20 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ Request		*ConnectionManager::NetworkActivitiesHandler()
 	while (0 == 0)
 	{
 		std::cout << "Before Select" << std::endl;
+		this->monitorSocket();
 		if (select(FD_SETSIZE, &this->_read_fds, &this->_write_fds, NULL, NULL) <= 0)
 			Logging::SystemFatal("[Select]-Fd monitoring failed");
 		std::cout << "After Select" << std::endl;
@@ -78,16 +79,6 @@ Request		*ConnectionManager::NetworkActivitiesHandler()
 				this->registerConnection(connection);
 				FD_SET(connection->_fd, &this->_read_fds);
 				// FD_SET(connection->_fd, &this->_write_fds);
-			}
-		}
-
-		// Check incoming Request (reading)
-		for (list<Connection *>::iterator it = this->_registred_connection.begin(); it != this->_registred_connection.end(); it++)
-		{
-			if (FD_ISSET((*it)->_fd, &this->_read_fds))
-			{
-				cout << "[<]-(Client)-Recive Request" << endl;
-				return ((*it)->receiveRequest());
 			}
 		}
 
@@ -110,7 +101,18 @@ Request		*ConnectionManager::NetworkActivitiesHandler()
 			it++;
 		}
 
-/*
+		// Check incoming Request (reading)
+		for (list<Connection *>::iterator it = this->_registred_connection.begin(); it != this->_registred_connection.end(); it++)
+		{
+			if (FD_ISSET((*it)->_fd, &this->_read_fds))
+			{
+				cout << "[<]-(Client)-Recive Request" << endl;
+				return ((*it)->receiveRequest());
+			}
+		}
+
+		// ! FIND WHI IS NOT WORKING 
+		/*
 		for (list<Responce *>::iterator it = this->_sendQueue.begin(); it != this->_sendQueue.end(); it++)
 		{
 

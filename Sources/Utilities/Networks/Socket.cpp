@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 12:48:57 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/17 16:46:28 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/23 12:37:20 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ Socket::Socket(const unsigned short port, const char *address)
 	// if (fcntl(this->fd_socket, F_SETFL, O_NONBLOCK) < 0)
 	// 	Logging::SystemFatal("[Socket](Creation)-Cannot change fd to non-block state");
 
-	inet_aton(address, &this->socket_settings.sin_addr);
+	int enable = 1;
+	if (setsockopt(this->fd_socket, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int)) < 0)
+		Logging::SystemFatal("[Socket](Config)-Cannot allow address reusing");
+
+	// this->socket_settings.sin_addr.s_addr = INADDR_ANY;
+	this->socket_settings.sin_addr.s_addr = inet_addr(address);
 	this->socket_settings.sin_family = AF_INET;
 	this->socket_settings.sin_port = htons(port);
 
