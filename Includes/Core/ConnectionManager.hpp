@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:52:47 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/19 19:13:08 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/23 14:18:20 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ class ConnectionManager
 		private:
 				list<Socket *>		_registred_socket;
 				list<Connection *>	_registred_connection;
-				list<Responce *>	_sendQueue;
+				list<Responce *>	_send_queue;
 				fd_set				_read_fds;
 				fd_set				_write_fds;
 		private:
@@ -39,7 +39,7 @@ class ConnectionManager
 				ConnectionManager(void);
 				virtual ~ConnectionManager(void);
 				void	registerSocket(Socket *socket);
-				void	monitorSocket();
+				void	refreshMonitoredFileDescriptor();
 				void	registerConnection(Connection *connection);
 				void	addResponceToSendQueue(Responce *responce);
 				Request	*NetworkActivitiesHandler();

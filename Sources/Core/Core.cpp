@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Core.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 14:45:07 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/20 14:34:41 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/23 14:16:28 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ Core::Core(const string port, const string password, const string existing_netwo
 	ConnectionManager Network;
 	Socket*	socket = new Socket(port_number);
 	Network.registerSocket(socket);
-	Network.monitorSocket();
 	cout << "					[\033[32m OK \033[0m]" << endl;
 
 	cout << "Connection Manager starting :";
