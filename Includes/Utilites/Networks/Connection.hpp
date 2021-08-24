@@ -6,7 +6,7 @@
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:47:10 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/20 13:52:24 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/24 15:06:04 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 #include "Resources/Request.hpp"
 #include "Resources/Responce.hpp"
+#include "Resources/Client.hpp"
 
 #include <unistd.h>
 #include <sys/socket.h>
@@ -31,6 +32,7 @@ class Connection
 	private:
 		int						_fd;
 		struct sockaddr_in		_client_address;
+		Client					_client;
 
 	private:
 		Connection(void);

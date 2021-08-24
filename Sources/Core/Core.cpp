@@ -6,7 +6,7 @@
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 14:45:07 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/24 10:55:03 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/24 15:00:33 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,10 @@ Core::Core(const string port, const string password, const string existing_netwo
 		cout << "Recive :" << request->getMessage() << endl;
 
 		// Request Processing (Il faut que tu ecrives ici mr seb si tu veux faire le traitement des request)
+
+		cout << "Sender : ";
+		request->getConnection().printInfo();
+		cout << endl;
 
 		Responce *test = new Responce(request->getConnection(), string(":localhost\\80 001 fgalaup :Welcome to the Internet Relay Chat\n"));
 
