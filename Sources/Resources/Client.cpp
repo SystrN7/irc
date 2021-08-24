@@ -1,4 +1,4 @@
-#include "Client.hpp"
+#include "Resources/Client.hpp"
 
 Client::Client() : _nick("user"), _isOperator(false) {};
 
