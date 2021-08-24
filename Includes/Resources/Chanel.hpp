@@ -6,7 +6,7 @@
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:03:04 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/24 11:03:07 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/24 12:01:53 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ class Chanel
 	private:
 		/* data */
 		std::map	<Client *, bool>	_map; 
-		std::map<Client,bool>::iterator _it;
 		string							_ChanName;
 
 	public:
