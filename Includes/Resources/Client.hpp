@@ -6,7 +6,7 @@
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 17:52:45 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/23 14:17:33 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/24 10:01:20 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,6 @@ class Client
 		Client(string name, bool isop);
 		Client(bool isop);
 		~Client();
+
+		bool	getIsOperator();
 };
