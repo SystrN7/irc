@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Connection.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:23:06 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/24 10:49:27 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/24 15:30:24 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int		Connection::sendResponce(Responce &message)
 
 Request *Connection::receiveRequest()
 {
-	// ! USE gnl to make it great aigain
 	int		length = 512;
 	char	buffer[512] = {0};
 
@@ -47,15 +46,14 @@ Request *Connection::receiveRequest()
 	//weechat -> /exit retour = -1 Connection interompue brutalement
 	//weechat -> /close retour = 0 Connection interompue normalement
 	//En cas d'erreur il faut sortir le FD du client de la liste de FD à monitorer
-	std::cout << "Length" << length << std::endl;
 	if (length < 0)
 	{
-		Logging::SystemError("[Connection] - Server faild to read client send data");
+		Logging::SystemWarning("[Connection] - Client has unexpectedly closed the connection");
 		return (NULL);
 	}
 	else if (length == 0)
 	{
-		Logging::SystemError("[Connection] - Client Disconnected from Server");
+		Logging::Info("[Connection] - Client Disconnected from Server.");
 		return (NULL);
 	}
 	return (

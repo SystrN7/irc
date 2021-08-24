@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:52:50 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/23 14:36:48 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/24 15:40:08 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,18 @@ ConnectionManager::~ConnectionManager(void)
 {
 	FD_ZERO(&this->_read_fds);
 	FD_ZERO(&this->_write_fds);
+
+	for (list<Socket *>::iterator it = this->_registred_socket.begin(); it != this->_registred_socket.end(); it++)
+		delete *it;
+	this->_registred_socket.clear();
+
+	for (list<Responce *>::iterator it = this->_send_queue.begin(); it != this->_send_queue.end(); it++)
+		delete *it;
+	this->_send_queue.clear();
+
+	for (list<Connection *>::iterator it = this->_registred_connection.begin(); it != this->_registred_connection.end(); it++)
+		delete *it;
+	this->_registred_connection.clear();
 }
 
 void	ConnectionManager::registerSocket(Socket *socket)
@@ -42,6 +54,12 @@ void	ConnectionManager::registerConnection(Connection *connection)
 void	ConnectionManager::addResponceToSendQueue(Responce *responce)
 {
 	this->_send_queue.push_back(responce);
+}
+
+void	ConnectionManager::removeConnection(Connection *connection)
+{
+	this->_registred_connection.remove(connection);
+	delete connection;
 }
 
 void ConnectionManager::refreshMonitoredFileDescriptor()
@@ -93,10 +111,14 @@ Request		*ConnectionManager::NetworkActivitiesHandler()
 		{
 			if(FD_ISSET((*it)->getConnection()._fd, &this->_write_fds))
 			{
-				cout << "[>]-(Server)-Send Messages." << endl;
-				(*it)->getConnection().sendResponce(**it);
+				Responce	*responce;
 
-				this->_send_queue.remove((*it));
+				cout << "[>]-(Server)-Send Messages." << endl;
+				responce = *it;
+				responce->getConnection().sendResponce(*responce);
+
+				this->_send_queue.remove(responce);
+				delete responce;
 
 				it = this->_send_queue.begin();
 				ite = this->_send_queue.end();
@@ -109,12 +131,21 @@ Request		*ConnectionManager::NetworkActivitiesHandler()
 		{
 			if (FD_ISSET((*it)->_fd, &this->_read_fds))
 			{
-				cout << "[<]-(Client)-Recive Request" << endl;
-				return ((*it)->receiveRequest());
+				Request		*request;
+
+				request = (*it)->receiveRequest();
+				if (request != NULL)
+				{
+					cout << "[<]-(Client)-Recive Request" << endl;
+					return (request);
+				}
+				// Remove conection and delete pointer
+				this->removeConnection(*it);
+				it = this->_registred_connection.begin();
 			}
 		}
 
-		// ! FIND WHI IS NOT WORKING 
+		// ! FIND WHY IS NOT WORKING 
 		/*
 		for (list<Responce *>::iterator it = this->_send_queue.begin(); it != this->_send_queue.end(); it++)
 		{
@@ -127,12 +158,6 @@ Request		*ConnectionManager::NetworkActivitiesHandler()
 				FD_CLR((*it)->getConnection()._fd, &this->_write_fds);
 				this->_send_queue.remove((*it));
 				//it = this->_send_queue.begin();
-				
-				
-				// ? To Move : Unregister Connected fd add function for connection reset by client
-				// delete (*it);
-				// this->_registred_connection.remove(*it);
-				// it = this->_registred_connection.begin();
 			}
 		}
 */

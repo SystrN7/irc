@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:52:47 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/23 14:18:20 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/24 14:45:40 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ class ConnectionManager
 				void	registerSocket(Socket *socket);
 				void	refreshMonitoredFileDescriptor();
 				void	registerConnection(Connection *connection);
+				void	removeConnection(Connection *connection);
 				void	addResponceToSendQueue(Responce *responce);
 				Request	*NetworkActivitiesHandler();
 };
