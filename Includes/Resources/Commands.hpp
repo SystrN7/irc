@@ -6,7 +6,7 @@
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 17:52:45 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/24 14:54:51 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/25 11:57:11 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 #include <string>
 #include <map>
+#include "Request.hpp"
+#include "Responce.hpp"
 
 using namespace std;
 
@@ -24,8 +26,11 @@ class Commands
 	private:
 		/* data */
 		std::map	<string, CommandFunction>	_map; 
+		Request		*_request;
 
 	public:
-		Commands();
-		~Commands();
+		Commands	();
+		virtual		~Commands();//delet la request dans le destructeur maybe
+
+		Responce	*ExecCommand(Request *request);
 };

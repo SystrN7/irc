@@ -6,7 +6,7 @@
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:47:10 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/24 15:06:04 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/25 11:00:19 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ class Connection
 		void	printInfo();
 		Request *receiveRequest();
 		int	sendResponce(Responce &message);
-	
+		Client	&getClient();
+
 	friend class ConnectionManager;
 };

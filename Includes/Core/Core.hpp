@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Core.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 14:48:40 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/17 15:05:03 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/25 11:56:55 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <sstream>
 
 #include "Core/ConnectionManager.hpp"
+#include "Resources/Commands.hpp"
 
 using namespace std;
 
