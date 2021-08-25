@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Commands.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 11:23:50 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/25 11:59:50 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/25 12:21:34 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ Commands::~Commands()
 Responce	*Commands::ExecCommand(Request *request)
 {
 	Client		&_client = request->getConnection().getClient();
+	(void)_client;
 	string		message = request->getMessage();
 
 	string 		CommandName = message.substr(0, message.find(" "));

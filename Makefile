@@ -6,7 +6,7 @@
 #    By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/03 15:18:41 by fgalaup           #+#    #+#              #
-#    Updated: 2021/08/19 17:02:31 by fgalaup          ###   ########lyon.fr    #
+#    Updated: 2021/08/25 12:18:34 by fgalaup          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ HEADERS_FILES	:=	IRC.hpp \
 SOURCE_FILES	:=	Core/Core.cpp \
 					Core/Logging.cpp \
 					Core/ConnectionManager.cpp \
+					Resources/Commands.cpp \
 					Resources/Chanel.cpp \
 					Resources/Client.cpp \
 					Resources/Message.cpp \
