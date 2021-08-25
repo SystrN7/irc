@@ -6,7 +6,7 @@
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:03:23 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/25 11:05:55 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/25 14:37:08 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ Client::Client(string name, bool isop) : _nick(name), _isOperator(isop) {};
 Client::Client(string name, bool isop, Chanel *chanel) : _nick(name), _isOperator(isop), _chanel(chanel) {};
 
 bool	Client::getIsOperator(){return (this->_isOperator);};
+
+void	Client::setIsOperator(bool isop){this->_isOperator = isop; };
 
 Client::~Client() {};
 

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/03 14:45:07 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/25 12:04:06 by seruiz           ###   ########lyon.fr   */
+/*   Created: 2021/08/25 15:55:20 by seruiz            #+#    #+#             */
+/*   Updated: 2021/08/25 16:29:06 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
  *  - port: is the port number on which your server will accept incoming connections.
  *  - password: is the password needed by any IRC client who wants to connect to your server.
  * 
- * If host,port_network and password_network aren’t given, you must create a new IRC network.
+ * If host,port_network and password_network aren't given, you must create a new IRC network.
  */
 int main(int argc, char const *argv[])
 {
@@ -64,7 +64,6 @@ void	Core::parsingParams(const string port, const string password, const string 
 	stream << port;
 	stream >> this->_port_number;
 
-	// 	Logging::Fatal("The port is not valid number !");
 	if (this->_port_number < 1 || this->_port_number > 65535)
 		Logging::Fatal("The port number is invalid it must be between 1 and 65535 !");
 
@@ -72,40 +71,83 @@ void	Core::parsingParams(const string port, const string password, const string 
 	if (password.size() < 5)
 		Logging::Fatal("The password must contain at least 5 characters !");
 }
+
+void	Core::registerCommands()
+{
+	this->_command_runner.addCommand("LIST", NULL);
+	this->_command_runner.addCommand("USER", cmdUSER);
+	this->_command_runner.addCommand("NICK", cmdNICK);
+	this->_command_runner.addCommand("PING", cmdPING);
+	this->_command_runner.addCommand("PONG", NULL);
+	this->_command_runner.addCommand("QUIT", NULL);
+	this->_command_runner.addCommand("PASS", NULL);
+	this->_command_runner.addCommand("SERVER", NULL);
+	this->_command_runner.addCommand("SQUIT", NULL);
+	this->_command_runner.addCommand("CONNECT", NULL);
+	this->_command_runner.addCommand("OPER", cmdOPER);
+	this->_command_runner.addCommand("ERROR", NULL);
+	this->_command_runner.addCommand("ADMIN", NULL);
+	this->_command_runner.addCommand("MOTD", NULL);
+	this->_command_runner.addCommand("USERHOST", NULL);
+	this->_command_runner.addCommand("VERSION", NULL);
+	this->_command_runner.addCommand("INFO", NULL);
+	this->_command_runner.addCommand("TIME", NULL);
+	this->_command_runner.addCommand("JOIN", NULL);
+	this->_command_runner.addCommand("PRIVMSG", NULL);
+	this->_command_runner.addCommand("INVITE", NULL);
+	this->_command_runner.addCommand("NAMES", NULL);
+	this->_command_runner.addCommand("WHO", NULL);
+	this->_command_runner.addCommand("WHOIS", NULL);
+	this->_command_runner.addCommand("WHOWAS", NULL);
+	this->_command_runner.addCommand("PART", NULL);
+	this->_command_runner.addCommand("MODE", NULL);
+	this->_command_runner.addCommand("NOTICE", NULL);
+	this->_command_runner.addCommand("AWAY", NULL);
+	this->_command_runner.addCommand("KILL", NULL);
+	this->_command_runner.addCommand("LINKS", NULL);
+	this->_command_runner.addCommand("STATS", NULL);
+	this->_command_runner.addCommand("NJOIN", NULL);
+	this->_command_runner.addCommand("LUSERS", NULL);
+	this->_command_runner.addCommand("ISON", NULL);	
+	this->_command_runner.addCommand("USERS", NULL);
+	this->_command_runner.addCommand("TOPIC", NULL);
+	this->_command_runner.addCommand("KICK", NULL);
+	this->_command_runner.addCommand("TRACE", NULL);
+	this->_command_runner.addCommand("DIE", NULL);
+	this->_command_runner.addCommand("WALLOPS", NULL);
+	this->_command_runner.addCommand("REHASH", NULL);
+	this->_command_runner.addCommand("SERVICE", NULL);
+	this->_command_runner.addCommand("SERVLIST", NULL);
+	this->_command_runner.addCommand("SQUERY", NULL);
+}
+
 void	Core::start()
 {
-	// signal(SIGINT, &shutdown_server);
+	command_context	context;
 
 	this->showHeader();
+	this->registerCommands();
+	// signal(SIGINT, &shutdown_server);
 	Socket*	socket = new Socket(this->_port_number);
 	this->_connection_manager.registerSocket(socket);
 
-	Logging::Info("server is ready. waiting client request !");
+	// this->_chanels["index"] = Chanel();
+	
+	context.chanels = &this->_chanels;
+	context.connection_list = &this->_connection_manager;
+	this->_command_runner.setContext(context);
 
-	Commands	cmd;
+	Logging::Info("server is ready. waiting client request !");
 
 	while (7 == 7)
 	{
 		Request *request = this->_connection_manager.NetworkActivitiesHandler();
 		cout << "Recive :" << request->getMessage() << endl;
 
-		// Request Processing (Il faut que tu ecrives ici mr seb si tu veux faire le traitement des request)
-
-		/*
-		cout << "Sender : ";
-		Client &ClientTest = request->getConnection().getClient();
-		cout << ClientTest.getNickname() << endl;
-		*/
-
-		Responce 	*test;
-		test = 	cmd.ExecCommand(request);
-
-		//remplacer fgalaup par le nickname du client
-		//Responce *test = new Responce(request->getConnection(), string(":localhost\\80 001 fgalaup :Welcome to the Internet Relay Chat\n"));
-
-		// End Request Processing
-
-		this->_connection_manager.addResponceToSendQueue(test);
+		Responce 	*responce;
+		responce = 	this->_command_runner.ExecCommand(request);
+		if (responce)
+			this->_connection_manager.addResponceToSendQueue(responce);
 		delete request;
 		
 		// shutdown server
@@ -118,7 +160,6 @@ Core::~Core()
 {
 	
 }
-
 
 void	shutdown_server(int code)
 {

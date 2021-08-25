@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+         #
+#    By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/03 15:18:41 by fgalaup           #+#    #+#              #
-#    Updated: 2021/08/25 12:18:34 by fgalaup          ###   ########lyon.fr    #
+#    Updated: 2021/08/25 15:42:40 by seruiz           ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ HEADERS_FILES	:=	IRC.hpp \
 					Resources/Request.hpp \
 					Resources/Responce.hpp \
 					Utilites/Networks/Socket.hpp \
-					Utilites/Networks/Connection.hpp
+					Utilites/Networks/Connection.hpp 
 
 SOURCE_FILES	:=	Core/Core.cpp \
 					Core/Logging.cpp \
@@ -49,7 +49,11 @@ SOURCE_FILES	:=	Core/Core.cpp \
 					Resources/Request.cpp \
 					Resources/Responce.cpp \
 					Utilities/Networks/Socket.cpp \
-					Utilities/Networks/Connection.cpp
+					Utilities/Networks/Connection.cpp \
+					Commands/NICK.cpp \
+					Commands/OPER.cpp \
+					Commands/PING.cpp \
+					Commands/USER.cpp
 
 
 OBJS			:= $(addprefix $(BINARY_DIR)/, $(SOURCE_FILES:.cpp=.o))
