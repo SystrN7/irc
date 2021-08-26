@@ -6,7 +6,7 @@
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:03:11 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/25 16:00:43 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/26 11:59:56 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@ Chanel::Chanel (string name, Client *creator) : _ChanName(name)
 {
 	this->_map.insert (std::pair<Client *,bool>(creator, true)); //Le createur d'un chan y est forcement op
 }
+
+Chanel::Chanel (string name, Client *creator, string pass) : _ChanName(name), _ChanPass(pass)
+{
+	this->_map.insert (std::pair<Client *,bool>(creator, true)); //Le createur d'un chan y est forcement op
+}
+
 
 Chanel::~Chanel()
 { }

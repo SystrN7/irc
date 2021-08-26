@@ -6,7 +6,7 @@
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 15:55:20 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/25 16:29:06 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/26 12:06:59 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	Core::registerCommands()
 	this->_command_runner.addCommand("VERSION", NULL);
 	this->_command_runner.addCommand("INFO", NULL);
 	this->_command_runner.addCommand("TIME", NULL);
-	this->_command_runner.addCommand("JOIN", NULL);
+	this->_command_runner.addCommand("JOIN", cmdJOIN);
 	this->_command_runner.addCommand("PRIVMSG", NULL);
 	this->_command_runner.addCommand("INVITE", NULL);
 	this->_command_runner.addCommand("NAMES", NULL);

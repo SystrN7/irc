@@ -6,7 +6,7 @@
 #    By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/03 15:18:41 by fgalaup           #+#    #+#              #
-#    Updated: 2021/08/25 15:42:40 by seruiz           ###   ########lyon.fr    #
+#    Updated: 2021/08/26 12:07:08 by seruiz           ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,8 @@ SOURCE_FILES	:=	Core/Core.cpp \
 					Commands/NICK.cpp \
 					Commands/OPER.cpp \
 					Commands/PING.cpp \
-					Commands/USER.cpp
+					Commands/USER.cpp \
+					Commands/JOIN.cpp
 
 
 OBJS			:= $(addprefix $(BINARY_DIR)/, $(SOURCE_FILES:.cpp=.o))

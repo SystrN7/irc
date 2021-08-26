@@ -6,7 +6,7 @@
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:03:04 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/24 15:03:42 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/26 15:03:49 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,17 @@ class Chanel
 		/* data */
 		std::map	<Client *, bool>	_map; 
 		string							_ChanName;
+		string							_ChanPass;
 
 	public:
 		Chanel();
 		Chanel (string name, Client *creator);
+		Chanel (string name, Client *creator, string pass);
 		~Chanel();
 
 		void	AddClient(Client *NewClient);
 		void	RemoveClient(Client *RemovedClient);
 		void	AddOpRole(Client *NewOp);
 		void	RemoveOpRole(Client *RemoveOp);
+		string	getPass() { return(this->_ChanPass); }
 };
