@@ -6,7 +6,7 @@
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:03:04 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/26 16:22:47 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/26 16:57:37 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,5 @@ class Chanel
 		void	AddOpRole(Connection *NewOp);
 		void	RemoveOpRole(Connection *RemoveOp);
 		string	getPass() { return(this->_ChanPass); }
+		std::map	<Connection *, bool> &getMap() { return(this->_map); }
 };

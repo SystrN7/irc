@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+         #
+#    By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/03 15:18:41 by fgalaup           #+#    #+#              #
-#    Updated: 2021/08/26 15:22:57 by fgalaup          ###   ########lyon.fr    #
+#    Updated: 2021/08/26 18:57:47 by seruiz           ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,9 @@ SOURCE_FILES	:=	Core/Core.cpp \
 					Commands/OPER.cpp \
 					Commands/PING.cpp \
 					Commands/USER.cpp \
-					Commands/JOIN.cpp
+					Commands/JOIN.cpp \
+					Commands/PRIVMSG.cpp \
+					Commands/NOTICE.cpp
 
 
 OBJS			:= $(addprefix $(BINARY_DIR)/, $(SOURCE_FILES:.cpp=.o))
