@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:52:50 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/24 15:40:08 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/26 16:00:43 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,15 +133,26 @@ Request		*ConnectionManager::NetworkActivitiesHandler()
 			{
 				Request		*request;
 
-				request = (*it)->receiveRequest();
-				if (request != NULL)
+				try
 				{
+					request = (*it)->receiveRequest();
 					cout << "[<]-(Client)-Recive Request" << endl;
-					return (request);
+					if (request != NULL)
+					{
+						return (request);
+					}
 				}
-				// Remove conection and delete pointer
-				this->removeConnection(*it);
-				it = this->_registred_connection.begin();
+				catch(const Connection::PartialMessageException& e)
+				{
+					Logging::Info(e.what());
+				}
+				catch(const Connection::CloseException& e)
+				{
+					Logging::Info(e.what());
+					// Remove conection and delete pointer
+					this->removeConnection(*it);
+					it = this->_registred_connection.begin();
+				}
 			}
 		}
 

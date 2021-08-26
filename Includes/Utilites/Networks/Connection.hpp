@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:47:10 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/26 11:06:25 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/26 15:51:42 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 #include <arpa/inet.h>
 
 #include <string>
+#include <exception>
+
 
 class Request;
 
@@ -55,4 +57,20 @@ class Connection
 		Client	&getClient();
 
 	friend class ConnectionManager;
+
+	// Exception
+	class CloseException: public exception
+	{
+		public:
+			virtual const char *what(void) const throw()
+			{ return ("Client close connection"); }
+	};
+
+	class PartialMessageException: public exception
+	{
+		public:
+			virtual const char *what(void) const throw()
+			{ return ("Partial command recive."); }
+	};
+
 };

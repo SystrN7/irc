@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:23:06 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/26 14:47:17 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/26 16:02:43 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,43 +60,27 @@ Request *Connection::receiveRequest()
 	while (0 == 0)
 	{
 		length = recv(this->_fd, &buffer, 1, 0);
+
 		if (length < 0 && errno == EAGAIN)
 		{
-			Logging::Warning("[Connection] - Partial Command");
-			break;
+			this->_read_buffer.clear();
+			this->_read_buffer = message;
+			throw Connection::PartialMessageException();
 		}
-		if (length < 0)
-		{
-			Logging::SystemWarning("[Connection] - Client has unexpectedly closed the connection");
-			return (NULL);
-		}
-		else if (length == 0 && first)
-		{
-			Logging::Info("[Connection] - Client Disconnected from Server.");
-			return (NULL);
-		}
-		if (length == 0)
-			break;
-		
+		else if (length < 0 || (length == 0 && first))
+			throw Connection::CloseException();
+
 		message.append(1, buffer);
 		if (buffer == '\n')
 			break;
 		first = false;
 	}
-	cout << "Lenght = " << length << endl;
 	if (message.size() >= Connection::MAX_IRC_MESSAGES_LENGTH)
 	{
 		Logging::Warning("[Connection] - Message from client was refused because it exceeded the maximum length of 512 characters.");
 		return (NULL);
 	}
 
-	if (length == -1)
-	{
-		this->_read_buffer.clear();
-		this->_read_buffer = message;
-		return (NULL);
-	}
-	
 	return (new Request(*this , message));
 }
 

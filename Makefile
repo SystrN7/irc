@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+         #
+#    By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/03 15:18:41 by fgalaup           #+#    #+#              #
-#    Updated: 2021/08/26 12:07:08 by seruiz           ###   ########lyon.fr    #
+#    Updated: 2021/08/26 15:22:57 by fgalaup          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ LIBRARIES	= -lpthread
 all:		$(NAME)
 
 $(NAME):	$(OBJS) $(HEADERS_FILES)
-			$(CC) $(CFLAGS) $(OBJS) $(MLX) $(LIBFT) -o $(NAME) $(LIBRARIES)
+			$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBRARIES)
 
 $(BINARY_DIR)/%.o:	$(SOURCES_DIR)/%.cpp  $(HEADERS_FILES)
 			@mkdir -p $(dir $@);
