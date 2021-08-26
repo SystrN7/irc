@@ -67,7 +67,7 @@ Responce *cmdJOIN(Request	*request, command_context context)
 		{
 			//Le mdp est le bon
 			cout << "Valid Password" << endl << endl;
-			it->second.AddClient(&request->getConnection().getClient());
+			it->second.AddClient(&request->getConnection());
 			responsestr = ":" + request->getConnection().getClient().getNickname() + "!~" + request->getConnection().getClient().getNickname() + "@localhost JOIN :" + ChanName + "\n";
 			//responsestr.append (":irc.example.net 353 " + request->getConnection().getClient().getNickname() + " = " + ChanName + ":@" + request->getConnection().getClient().getNickname() + "\n");
 			//responsestr.append (":irc.example.net 366 " + request->getConnection().getClient().getNickname() + " " + ChanName + ":End of NAMES list" + "\n");
@@ -86,12 +86,12 @@ Responce *cmdJOIN(Request	*request, command_context context)
 		if (Password != ChanName)
 		{
 			cout << "password set" << endl << endl;
-			context.chanels->insert ( pair<string,Chanel>(ChanName, Chanel(ChanName, &(request->getConnection().getClient()), Password)) );
+			context.chanels->insert ( pair<string,Chanel>(ChanName, Chanel(ChanName, &(request->getConnection()), Password)) );
 		}
 		else
 		{
 			cout << "password NOT set" << endl << endl;
-			context.chanels->insert ( pair<string,Chanel>(ChanName, Chanel(ChanName, &(request->getConnection().getClient())) ));
+			context.chanels->insert ( pair<string,Chanel>(ChanName, Chanel(ChanName, &(request->getConnection())) ));
 		}
 		responsestr = ":" + request->getConnection().getClient().getNickname() + "!~" + request->getConnection().getClient().getNickname() + "@localhost JOIN :" + ChanName + "\n";
 		//responsestr.append (":irc.example.net 353 " + request->getConnection().getClient().getNickname() + " = " + ChanName + ":@" + request->getConnection().getClient().getNickname() + "\n");
