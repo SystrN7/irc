@@ -14,16 +14,32 @@ Responce *cmdJOIN(Request	*request, command_context context)
 	Password = ChanName.substr(ChanName.find_first_of(" \t")+1);
 	// if (!Password.empty())
 	// 	cout << "there is a password";
+
+	
+	ChanName = ChanName.substr(0, ChanName.size()-(Password.length()));	
+
 	Password = Password.substr(0, Password.size()-2);
 
-	ChanName = ChanName.substr(0, ChanName.size()-(Password.length() + 3));
+	if (ChanName.length() == 0)
+		ChanName = Password;
+	else
+		ChanName = ChanName.substr(0, ChanName.size()-1);
+	/*
+	if (ChanName == Password)
+		ChanName = ChanName.substr(0, ChanName.size()-2);
+	else
+	{
+		cout << "WESH" << endl;
+		ChanName = ChanName.substr(0, ChanName.size()-(Password.length() + 3));	
+	}
+	*/
 
 	//cout << "ChanName = " << ChanName << endl << "PassWord = " << Password << endl << endl;
 
 	//Essaye de chercher si le chan Existe dans la liste et essayer de s'y connecter
 	//Sinon, crée le chan avec ou sans mdp
 
-	cout << "ChanName = " << ChanName << endl << "ChanPass = " << Password << endl << endl;
+	cout << "ChanName = " << ChanName << "TEST" << endl << "ChanPass = " << Password << "TEST" << endl << endl;
 
 	if (ChanName.at(0) != '#')
 	{
@@ -47,14 +63,14 @@ Responce *cmdJOIN(Request	*request, command_context context)
 	{
 		//le chan existe
 		cout << "Chan exists" << endl;
-		if (it->second.getPass() == Password)
+		if (it->second.getPass() == Password || (ChanName == Password && it->second.getPass().length() == 0))
 		{
 			//Le mdp est le bon
 			cout << "Valid Password" << endl << endl;
 			it->second.AddClient(&request->getConnection().getClient());
 			responsestr = ":" + request->getConnection().getClient().getNickname() + "!~" + request->getConnection().getClient().getNickname() + "@localhost JOIN :" + ChanName + "\n";
-			responsestr.append (":irc.example.net 353 " + request->getConnection().getClient().getNickname() + " = " + ChanName + ":@" + request->getConnection().getClient().getNickname() + "\n");
-			responsestr.append (":irc.example.net 366 " + request->getConnection().getClient().getNickname() + " " + ChanName + ":End of NAMES list" + "\n");
+			//responsestr.append (":irc.example.net 353 " + request->getConnection().getClient().getNickname() + " = " + ChanName + ":@" + request->getConnection().getClient().getNickname() + "\n");
+			//responsestr.append (":irc.example.net 366 " + request->getConnection().getClient().getNickname() + " " + ChanName + ":End of NAMES list" + "\n");
 		}
 		else
 		{
@@ -78,8 +94,8 @@ Responce *cmdJOIN(Request	*request, command_context context)
 			context.chanels->insert ( pair<string,Chanel>(ChanName, Chanel(ChanName, &(request->getConnection().getClient())) ));
 		}
 		responsestr = ":" + request->getConnection().getClient().getNickname() + "!~" + request->getConnection().getClient().getNickname() + "@localhost JOIN :" + ChanName + "\n";
-		responsestr.append (":irc.example.net 353 " + request->getConnection().getClient().getNickname() + " = " + ChanName + ":@" + request->getConnection().getClient().getNickname() + "\n");
-		responsestr.append (":irc.example.net 366 " + request->getConnection().getClient().getNickname() + " " + ChanName + ":End of NAMES list" + "\n");
+		//responsestr.append (":irc.example.net 353 " + request->getConnection().getClient().getNickname() + " = " + ChanName + ":@" + request->getConnection().getClient().getNickname() + "\n");
+		//responsestr.append (":irc.example.net 366 " + request->getConnection().getClient().getNickname() + " " + ChanName + ":End of NAMES list" + "\n");
 	}
 
 	Responce *responce = new Responce(request->getConnection(), responsestr);
