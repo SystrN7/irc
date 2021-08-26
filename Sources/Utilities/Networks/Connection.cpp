@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Connection.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:23:06 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/25 11:00:29 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/26 14:47:17 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,29 +36,68 @@ int		Connection::sendResponce(Responce &message)
 	return (status);
 }
 
+
+/**
+ * La valeur de retour sera 0 si le pair a effectué un arrêt normal
+ * weechat -> /exit retour = -1 Connection interompue brutalement
+ * weechat -> /close retour = 0 Connection interompue normalement
+ * En cas d'erreur il faut sortir le FD du client de la liste de FD à monitorer
+ **/
 Request *Connection::receiveRequest()
 {
-	int		length = 512;
-	char	buffer[512] = {0};
+	bool	first = true;
+	int		length;
+	char	buffer = '\0';
+	string	message;
 
-	length = recv(this->_fd, buffer, length, 0);
-	//La valeur de retour sera 0 si le pair a effectué un arrêt normal
-	//weechat -> /exit retour = -1 Connection interompue brutalement
-	//weechat -> /close retour = 0 Connection interompue normalement
-	//En cas d'erreur il faut sortir le FD du client de la liste de FD à monitorer
-	if (length < 0)
+	message = this->_read_buffer;
+	this->_read_buffer.clear();
+
+	// // STD BUG FIX (because why not ^_^)
+	// if (message.size() == 0)
+	// 	message.append(" ");
+
+	while (0 == 0)
 	{
-		Logging::SystemWarning("[Connection] - Client has unexpectedly closed the connection");
+		length = recv(this->_fd, &buffer, 1, 0);
+		if (length < 0 && errno == EAGAIN)
+		{
+			Logging::Warning("[Connection] - Partial Command");
+			break;
+		}
+		if (length < 0)
+		{
+			Logging::SystemWarning("[Connection] - Client has unexpectedly closed the connection");
+			return (NULL);
+		}
+		else if (length == 0 && first)
+		{
+			Logging::Info("[Connection] - Client Disconnected from Server.");
+			return (NULL);
+		}
+		if (length == 0)
+			break;
+		
+		message.append(1, buffer);
+		if (buffer == '\n')
+			break;
+		first = false;
+	}
+	cout << "Lenght = " << length << endl;
+	if (message.size() >= Connection::MAX_IRC_MESSAGES_LENGTH)
+	{
+		Logging::Warning("[Connection] - Message from client was refused because it exceeded the maximum length of 512 characters.");
 		return (NULL);
 	}
-	else if (length == 0)
+
+	if (length == -1)
 	{
-		Logging::Info("[Connection] - Client Disconnected from Server.");
+		this->_read_buffer.clear();
+		this->_read_buffer = message;
 		return (NULL);
 	}
-	return (
-		new Request(*this ,string(buffer, length))
-	);
+	
+	return (new Request(*this , message));
 }
 
 Client	&Connection::getClient() { return (this->_client); };

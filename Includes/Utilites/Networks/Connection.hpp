@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:47:10 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/25 12:19:56 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/26 11:06:25 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,12 @@ using namespace std;
 
 class Connection
 {
+	static const int MAX_IRC_MESSAGES_LENGTH = 512;
+
 	private:
 		int						_fd;
 		struct sockaddr_in		_client_address;
+		string					_read_buffer;
 		Client					_client;
 
 	private:

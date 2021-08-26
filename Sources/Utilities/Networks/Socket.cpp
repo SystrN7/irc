@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 12:48:57 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/23 12:37:20 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/26 12:49:58 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ Socket::Socket(const unsigned short port, const char *address)
 	if (this->fd_socket < 0)
 		Logging::SystemFatal("[Socket](Creation)-Cannot create socket");
 
-	// if (fcntl(this->fd_socket, F_SETFL, O_NONBLOCK) < 0)
-	// 	Logging::SystemFatal("[Socket](Creation)-Cannot change fd to non-block state");
+	if (fcntl(this->fd_socket, F_SETFL, O_NONBLOCK) < 0)
+		Logging::SystemFatal("[Socket](Creation)-Cannot change fd to non-block state");
 
 	int enable = 1;
 	if (setsockopt(this->fd_socket, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int)) < 0)
