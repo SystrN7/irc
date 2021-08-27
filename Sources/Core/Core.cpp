@@ -6,7 +6,7 @@
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 15:55:20 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/27 15:15:23 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 15:38:37 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	Core::registerCommands()
 	this->_command_runner.addCommand("NICK", cmdNICK);
 	this->_command_runner.addCommand("PING", cmdPING);
 	this->_command_runner.addCommand("PONG", NULL);
-	this->_command_runner.addCommand("QUIT", NULL);
+	this->_command_runner.addCommand("QUIT", cmdQUIT);
 	this->_command_runner.addCommand("PASS", cmdPASS);
 	this->_command_runner.addCommand("SERVER", NULL);
 	this->_command_runner.addCommand("SQUIT", NULL);
