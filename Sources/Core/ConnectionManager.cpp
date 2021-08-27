@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:52:50 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/27 12:15:30 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 16:13:05 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ Request		*ConnectionManager::NetworkActivitiesHandler()
 				responce->getConnection().sendResponce(*responce);
 
 				this->_send_queue.remove(responce);
+				if (responce->getDestroyConnection())
+					this->removeConnection(&responce->getConnection());
 				delete responce;
 
 				it = this->_send_queue.begin();
