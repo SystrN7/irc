@@ -6,7 +6,7 @@
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 15:55:20 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/26 12:06:59 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/26 18:58:10 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	Core::registerCommands()
 	this->_command_runner.addCommand("INFO", NULL);
 	this->_command_runner.addCommand("TIME", NULL);
 	this->_command_runner.addCommand("JOIN", cmdJOIN);
-	this->_command_runner.addCommand("PRIVMSG", NULL);
+	this->_command_runner.addCommand("PRIVMSG", cmdPRIVMSG);
 	this->_command_runner.addCommand("INVITE", NULL);
 	this->_command_runner.addCommand("NAMES", NULL);
 	this->_command_runner.addCommand("WHO", NULL);
@@ -101,7 +101,7 @@ void	Core::registerCommands()
 	this->_command_runner.addCommand("WHOWAS", NULL);
 	this->_command_runner.addCommand("PART", NULL);
 	this->_command_runner.addCommand("MODE", NULL);
-	this->_command_runner.addCommand("NOTICE", NULL);
+	this->_command_runner.addCommand("NOTICE", cmdNOTICE);
 	this->_command_runner.addCommand("AWAY", NULL);
 	this->_command_runner.addCommand("KILL", NULL);
 	this->_command_runner.addCommand("LINKS", NULL);

@@ -6,37 +6,39 @@
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:03:04 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/26 15:03:49 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/26 16:57:37 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include "Client.hpp"
+// #include "Client.hpp"
+#include "Utilites/Networks/Connection.hpp"
 #include <string>
 #include <map>
 
 using namespace std;
 
-class Client;
+class Connection;
 
 class Chanel
 {
 	private:
 		/* data */
-		std::map	<Client *, bool>	_map; 
-		string							_ChanName;
-		string							_ChanPass;
+		std::map	<Connection *, bool>	_map;
+		string								_ChanName;
+		string								_ChanPass;
 
 	public:
 		Chanel();
-		Chanel (string name, Client *creator);
-		Chanel (string name, Client *creator, string pass);
+		Chanel (string name, Connection *connection);
+		Chanel (string name, Connection *connection, string pass);
 		~Chanel();
 
-		void	AddClient(Client *NewClient);
-		void	RemoveClient(Client *RemovedClient);
-		void	AddOpRole(Client *NewOp);
-		void	RemoveOpRole(Client *RemoveOp);
+		void	AddClient(Connection *NewConnection);
+		void	RemoveClient(Connection *RemovedConnection);
+		void	AddOpRole(Connection *NewOp);
+		void	RemoveOpRole(Connection *RemoveOp);
 		string	getPass() { return(this->_ChanPass); }
+		std::map	<Connection *, bool> &getMap() { return(this->_map); }
 };

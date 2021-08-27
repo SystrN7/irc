@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:52:47 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/26 18:08:48 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 10:46:17 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,5 @@ class ConnectionManager
 				void	removeConnection(Connection *connection);
 				void	addResponceToSendQueue(Responce *responce);
 				Request	*NetworkActivitiesHandler();
+				list<Connection *> getConnectionList() { return (this->_registred_connection); };
 };
