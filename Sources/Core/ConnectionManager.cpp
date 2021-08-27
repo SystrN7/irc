@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:52:50 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/27 16:13:05 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 17:07:52 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ ConnectionManager::~ConnectionManager(void)
 	for (list<Responce *>::iterator it = this->_send_queue.begin(); it != this->_send_queue.end(); it++)
 		delete *it;
 	this->_send_queue.clear();
+
+	for (list<Request *>::iterator it = this->_recv_queue.begin(); it != this->_recv_queue.end(); it++)
+		delete *it;
+	this->_recv_queue.clear();
 
 	for (list<Connection *>::iterator it = this->_registred_connection.begin(); it != this->_registred_connection.end(); it++)
 		delete *it;
