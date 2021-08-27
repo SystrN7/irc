@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Chanel.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:03:11 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/26 16:18:23 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 15:14:27 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,13 @@ Chanel::~Chanel()
 void	Chanel::AddClient(Connection *NewConnection)
 {
 	this->_map.insert (std::pair<Connection *,bool>(NewConnection, NewConnection->getClient().getIsOperator()));
+	NewConnection->registerChanel(this);
 }
 
 void	Chanel::RemoveClient(Connection *RemovedClient) 
 {
 	this->_map.erase(RemovedClient);
+	RemovedClient->unregisterChanel(this);
 }
 
 void	Chanel::AddOpRole(Connection *NewOp)

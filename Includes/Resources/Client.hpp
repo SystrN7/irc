@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 17:52:45 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/27 13:18:57 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 15:09:39 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-// #include "Chanel.hpp"
 #include <string>
 
 using namespace std;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Core.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 15:55:20 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/27 15:15:23 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 16:00:44 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,17 @@ void	Core::start()
 
 	while (7 == 7)
 	{
+		for (map<string, Chanel>::iterator it = this->_chanels.begin() ; it != this->_chanels.end() ; it++)
+		{
+			if (it->second.getMap().size() == 0)
+			{
+				this->_chanels.erase(it);
+				it = this->_chanels.begin();
+			}
+			if (it == this->_chanels.end())
+				break;
+		}
+
 		Request *request = this->_connection_manager.NetworkActivitiesHandler();
 		if (request)
 		{
