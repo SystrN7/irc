@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:23:06 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/27 15:10:36 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 16:51:44 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,24 +66,27 @@ list<Request *>Connection::receiveRequest()
 	if (length == -1 || length == 0)
 		throw Connection::CloseException();
 
+	cout << "=======1==========" << endl;
 	message.append(buffer, length);
 
-	
+
 	while ((message_lenght = message.find("\n")) != string::npos)
 	{
 		message_lenght += 1;
 		if (message_lenght > 512)
 			Logging::Warning("[Connection] - Message from client was refused because it exceeded the maximum length of 512 characters.");
-		else
+		else if (message_lenght > 1)
 		{
 			string unic_message = message.substr(0, message_lenght);
-			if (unic_message[(int)(unic_message.size() - 2)] != '\r')
+			if (unic_message[(unic_message.size() - 2)] != '\r')
 				unic_message.insert(message_lenght - 1, 1, '\r');
 			message_queue.push_back(new Request(*this, unic_message));
 		}
 
 		message.erase(0, message_lenght);
 	}
+
+	cout << "=======2==========" << endl;
 
 	this->_read_buffer = message;
 
