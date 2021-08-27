@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Connection.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:23:06 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/27 10:42:52 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 11:22:16 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int		Connection::sendResponce(Responce &message)
  **/
 list<Request *>Connection::receiveRequest()
 {
-	size_t	i = 0;
+	//size_t	i = 0;
 	char	buffer[10000] = {0};
 	ssize_t	length = 0;
 	string	message;
@@ -65,14 +65,16 @@ list<Request *>Connection::receiveRequest()
 
 	message.append(buffer, length);
 
-	
+	/*
 	while ((i = message.find("\n", i)) != string::npos)
 	{
 		if (message[i] != '\r')
 			message.insert(i, 1, '\r');
 		i += 2;
 	}
+	*/
 
+/*
 	while ((message_lenght = message.find("\r\n")) != string::npos)
 	{
 		message_lenght += 2;
@@ -80,7 +82,17 @@ list<Request *>Connection::receiveRequest()
 			Logging::Warning("[Connection] - Message from client was refused because it exceeded the maximum length of 512 characters.");
 		else
 			message_queue.push_back(new Request(*this, message.substr(0, message_lenght)));
-		message.erase(0, message_lenght + 2);
+		message.erase(0, message_lenght);
+	}
+*/
+	while ((message_lenght = message.find("\n")) != string::npos)
+	{
+		message_lenght += 1;
+		if (message_lenght > 512)
+			Logging::Warning("[Connection] - Message from client was refused because it exceeded the maximum length of 512 characters.");
+		else
+			message_queue.push_back(new Request(*this, message.substr(0, message_lenght)));
+		message.erase(0, message_lenght);
 	}
 
 	this->_read_buffer = message;

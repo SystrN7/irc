@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Core.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 15:55:20 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/27 11:42:49 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 12:21:05 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	Core::registerCommands()
 	this->_command_runner.addCommand("ISON", NULL);	
 	this->_command_runner.addCommand("USERS", NULL);
 	this->_command_runner.addCommand("TOPIC", NULL);
-	this->_command_runner.addCommand("KICK", NULL);
+	this->_command_runner.addCommand("KICK", cmdKICK);
 	this->_command_runner.addCommand("TRACE", NULL);
 	this->_command_runner.addCommand("DIE", NULL);
 	this->_command_runner.addCommand("WALLOPS", NULL);
@@ -137,6 +137,7 @@ void	Core::start()
 	
 	context.chanels = &this->_chanels;
 	context.connection_list = &this->_connection_manager;
+	context.ServPass = this->_password;
 	this->_command_runner.setContext(context);
 
 	Logging::Info("server is ready. waiting client request !");
