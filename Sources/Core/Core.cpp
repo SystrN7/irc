@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 15:55:20 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/27 16:01:27 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 16:07:37 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ void	Core::parsingParams(const string port, const string password, const string 
 
 	this->_password = password;
 	// Check password
-	if (password.length() < 5 && password.length() > 42)
-		Logging::Fatal("The password must contain at least 5 characters long and least than 42 characters !");
+	if (password.length() > 42)
+		Logging::Fatal("The password must contain at least than 42 characters !");
 }
 
 void	Core::registerCommands()
