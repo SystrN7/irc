@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:52:50 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/26 18:21:57 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 12:15:30 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,20 @@ Request		*ConnectionManager::NetworkActivitiesHandler()
 {
 	while (0 == 0)
 	{
-		this->refreshMonitoredFileDescriptor();
-		if (select(FD_SETSIZE, &this->_read_fds, &this->_write_fds, NULL, NULL) <= 0)
+		struct timeval timeout;
+		int select_status = 0;
+		
+		do
+		{
+			timeout.tv_sec = 0;
+			timeout.tv_usec = 0;
+			this->refreshMonitoredFileDescriptor();
+			select_status = select(FD_SETSIZE, &this->_read_fds, &this->_write_fds, NULL, &timeout);
+
+			if (_shutdown)
+				return (NULL);
+		} while (select_status == 0);
+		if ( select_status < 0)
 			Logging::SystemFatal("[Select]-Fd monitoring failed");
 		
 		// Check socket (incoming connection)

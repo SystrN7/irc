@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Core.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 14:48:40 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/25 16:33:14 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 11:41:46 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
+
+#include "IRC.hpp"
 
 #include <csignal>
 #include <string>
@@ -25,8 +27,6 @@ using namespace std;
 class Core
 {
     /* Attribute */
-    public:
-        static bool			_shutdown;
     private:
         map<string, Chanel>	_chanels;
         Commands			_command_runner;

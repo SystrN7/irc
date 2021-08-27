@@ -6,12 +6,13 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:52:47 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/27 10:46:17 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 11:25:05 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
+#include "IRC.hpp"
 #include "Utilites/Networks/Socket.hpp"
 #include "Utilites/Networks/Connection.hpp"
 

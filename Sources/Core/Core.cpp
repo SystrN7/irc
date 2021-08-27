@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Core.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 15:55:20 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/27 09:58:37 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 11:42:49 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Core/Core.hpp"
+
+bool _shutdown;
 
 /**
  * Valid Program inputs
@@ -36,10 +38,10 @@ int main(int argc, char const *argv[])
 	return (0);
 }
 
-bool Core::_shutdown = false;
 
 Core::Core(const string port, const string password, const string existing_network)
 {
+	_shutdown = false;
 	this->parsingParams(port, password, existing_network);
 }
 
@@ -127,7 +129,7 @@ void	Core::start()
 
 	this->showHeader();
 	this->registerCommands();
-	// signal(SIGINT, &shutdown_server);
+	signal(SIGINT, &shutdown_server);
 	Socket*	socket = new Socket(this->_port_number);
 	this->_connection_manager.registerSocket(socket);
 
@@ -142,16 +144,17 @@ void	Core::start()
 	while (7 == 7)
 	{
 		Request *request = this->_connection_manager.NetworkActivitiesHandler();
-		cout << "Recive :" << request->getMessage() << endl;
-
-		Responce 	*responce;
-		responce = 	this->_command_runner.ExecCommand(request);
-		if (responce)
-			this->_connection_manager.addResponceToSendQueue(responce);
-		delete request;
-		
+		if (request)
+		{
+			cout << "Recive :" << request->getMessage() << endl;
+			Responce 	*responce;
+			responce = 	this->_command_runner.ExecCommand(request);
+			if (responce)
+				this->_connection_manager.addResponceToSendQueue(responce);
+			delete request;
+		}
 		// shutdown server
-		if (Core::_shutdown)
+		if (_shutdown)
 			break;
 	}
 }
@@ -164,5 +167,5 @@ Core::~Core()
 void	shutdown_server(int code)
 {
 	(void)code;
-	Core::_shutdown = true;
+	_shutdown = true;
 }
