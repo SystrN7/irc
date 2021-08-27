@@ -6,7 +6,7 @@
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 17:52:45 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/27 10:32:26 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 13:18:57 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ class Client
 		string	_nick;
 		string	_user;
 		bool	_isOperator;
+		bool	_isIdentified;
 		// Chanel	*_chanel;
 	public:
 		Client();
@@ -42,5 +43,6 @@ class Client
 		void	setNickname(string NewName);
 		string	getUserName();
 		void	setUserName(string NewUserName);
-		
+		void	setIsIdentified(bool isId);
+		bool	getIsIdentified(void);	
 };

@@ -6,7 +6,7 @@
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 15:55:20 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/27 12:21:05 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 14:04:42 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,10 @@ void	Core::parsingParams(const string port, const string password, const string 
 	if (this->_port_number < 1 || this->_port_number > 65535)
 		Logging::Fatal("The port number is invalid it must be between 1 and 65535 !");
 
+	this->_password = password;
 	// Check password
-	if (password.size() < 5)
-		Logging::Fatal("The password must contain at least 5 characters !");
+	if (password.length() < 5 && password.length() > 42)
+		Logging::Fatal("The password must contain at least 5 characters long and least than 42 characters !");
 }
 
 void	Core::registerCommands()
@@ -82,7 +83,7 @@ void	Core::registerCommands()
 	this->_command_runner.addCommand("PING", cmdPING);
 	this->_command_runner.addCommand("PONG", NULL);
 	this->_command_runner.addCommand("QUIT", NULL);
-	this->_command_runner.addCommand("PASS", NULL);
+	this->_command_runner.addCommand("PASS", cmdPASS);
 	this->_command_runner.addCommand("SERVER", NULL);
 	this->_command_runner.addCommand("SQUIT", NULL);
 	this->_command_runner.addCommand("CONNECT", NULL);

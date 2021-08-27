@@ -10,9 +10,17 @@ Responce *cmdPASS(Request	*request, command_context context)
 	string	Password = message.substr(message.find_first_of(" \t")+1);
 	Password = Password.substr(0, Password.size()-2);
 
-	if (Password == context.get)
-	responsestr = ":localhost\\80 001 " + request->getConnection().getClient().getNickname() +  " :Nikname well set\n";
+	cout << "ServPass = " << context.ServPass << "TEST" << endl << "TriedPas = " << Password << "TEST" << endl;
 
-	Responce *responce = new Responce(request->getConnection(), responsestr);
-	return (responce);
+	if (request->getConnection().getClient().getIsIdentified() == true || request->getConnection().getClient().getUserName().length() != 0)
+	{
+		responsestr = ":localhost\\80 462 " + request->getConnection().getClient().getNickname() + " :Connection already registered\n";
+		Responce *responce = new Responce(request->getConnection(), responsestr);
+		return (responce);
+	}
+	if (Password == context.ServPass || context.ServPass.length() == 0)
+		request->getConnection().getClient().setIsIdentified(true);
+	else
+		request->getConnection().getClient().setIsIdentified(false);
+	return (NULL);
 }

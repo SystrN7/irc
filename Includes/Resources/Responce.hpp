@@ -6,7 +6,7 @@
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 16:35:46 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/25 10:53:24 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 14:22:40 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ class Responce: public Message
 		Responce();
 		Responce(const Responce &copy);
 		Responce &operator=(const Responce &copy);
+		bool		_destroyConnaction;
 	public:
 		Responce(Connection &client, string message): Message(client, message) {}
 		virtual ~Responce() {}

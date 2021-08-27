@@ -21,8 +21,6 @@ Responce *cmdJOIN(Request	*request, command_context context)
 	else
 		ChanName = ChanName.substr(0, ChanName.size()-1);
 
-	cout << "ChanName = " << ChanName << "TEST" << endl << "ChanPass = " << Password << "TEST" << endl << endl;
-
 	if (ChanName.at(0) != '#')
 	{
 		responsestr = ":localhost\\80 403 " + request->getConnection().getClient().getNickname() +  " :No such nick/channel\n";
@@ -35,11 +33,9 @@ Responce *cmdJOIN(Request	*request, command_context context)
 	if (it != context.chanels->end())
 	{
 		//le chan existe
-		cout << "Chan exists" << endl;
 		if (it->second.getPass() == Password || (ChanName == Password && it->second.getPass().length() == 0))
 		{
 			//Le mdp est le bon
-			cout << "Valid Password" << endl << endl;
 			it->second.AddClient(&request->getConnection());
 			responsestr = ":" + request->getConnection().getClient().getNickname() + "!~" + request->getConnection().getClient().getNickname() + "@localhost JOIN :" + ChanName + "\n";
 		
@@ -49,7 +45,6 @@ Responce *cmdJOIN(Request	*request, command_context context)
 			it = context.chanels->find(ChanName);
 			if (it != context.chanels->end())
 			{
-				cout << it->first << endl;
 				map<Connection *, bool>		map = it->second.getMap();
 				it2 = map.begin();
 				while (it2 != map.end())
@@ -64,26 +59,16 @@ Responce *cmdJOIN(Request	*request, command_context context)
 			}
 		}
 		else
-		{
-			cout << "invalid password" << endl << endl;
 			responsestr = ":localhost\\80 475 " + request->getConnection().getClient().getNickname() +  " :Cannot join channel (+k)\n";
-		}
 	}
 
 	else
 	{
-		cout << "Chan must be created" << endl;
 		//Il faut le créer (string name, Client *creator);
 		if (Password != ChanName)
-		{
-			cout << "password set" << endl << endl;
 			context.chanels->insert ( pair<string,Chanel>(ChanName, Chanel(ChanName, &(request->getConnection()), Password)) );
-		}
 		else
-		{
-			cout << "password NOT set" << endl << endl;
 			context.chanels->insert ( pair<string,Chanel>(ChanName, Chanel(ChanName, &(request->getConnection())) ));
-		}
 		responsestr = ":" + request->getConnection().getClient().getNickname() + "!~" + request->getConnection().getClient().getNickname() + "@localhost JOIN :" + ChanName + "\n";
 	}
 

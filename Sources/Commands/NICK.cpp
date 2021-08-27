@@ -9,9 +9,9 @@ Responce *cmdNICK(Request	*request, command_context context)
 	message = request->getMessage();
 	string	NickName = message.substr(message.find_first_of(" \t")+1);
 	NickName = NickName.substr(0, NickName.size()-2);
-	request->getConnection().getClient().setNickname(NickName);
 
-	responsestr = ":localhost\\80 001 " + request->getConnection().getClient().getNickname() +  " :Nikname well set\n";
+	responsestr = ":" + request->getConnection().getClient().getNickname() +  "!~" + request->getConnection().getClient().getNickname() + "@localhost NICK :" + NickName + "\n";
+	request->getConnection().getClient().setNickname(NickName);
 
 	Responce *responce = new Responce(request->getConnection(), responsestr);
 	return (responce);
