@@ -18,6 +18,9 @@ Responce *cmdPART(Request	*request, command_context context)
 	rest = rest.substr(0, rest.size()-2);
 	ChanName = ChanName.substr(0, ChanName.size()-1);
 
+	if (ChanName.length() == 0 || rest.length() == 0)
+		return (NULL);
+
 	if (ChanName.at(0) != '#')
 	{
 		responsestr = ":localhost\\80 403 " + request->getConnection().getClient().getNickname() +  " :No such nick/channel\n";

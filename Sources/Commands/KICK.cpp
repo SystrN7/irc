@@ -28,6 +28,9 @@ Responce *cmdKICK(Request	*request, command_context context)
 	ChanName = ChanName.substr(0, ChanName.size()-1);
 	TargetName = TargetName.substr(0, TargetName.size()-1);
 
+	if (TargetName.length() == 0 || ChanName.length() == 0 || rest.length() == 0)
+		return (NULL);
+
 	map<string, Chanel>::iterator it;
 	map<Connection *, bool>::iterator it2;
 	map<Connection *, bool>::iterator itIsIn;

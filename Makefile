@@ -6,7 +6,7 @@
 #    By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/03 15:18:41 by fgalaup           #+#    #+#              #
-#    Updated: 2021/08/27 15:38:08 by seruiz           ###   ########lyon.fr    #
+#    Updated: 2021/08/27 16:22:07 by seruiz           ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ INCLUDES_DIR	:= Includes
 
 CC		:= clang++
 RM		:= rm -f
-CFLAGS	:= -Wall -Wextra -Werror -fsanitize=address -fsanitize=undefined
+CFLAGS	:= -Wall -Wextra -Werror 
 
 INCLUDES		:= -I $(INCLUDES_DIR) -g3
 

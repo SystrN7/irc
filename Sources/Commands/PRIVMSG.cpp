@@ -20,10 +20,11 @@ Responce *cmdPRIVMSG(Request	*request, command_context context)
 	ChanName = ChanName.substr(0, ChanName.size()-(rest.length()));	
 	rest = rest.substr(0, rest.size()-2);
 	ChanName = ChanName.substr(0, ChanName.size()-1);
-	
-	cout << "ChanName = " << ChanName << "TEST" << endl << "rest = " << rest << "TEST" << endl;
 
 	SentMessage = message.substr(message.find_first_of(" \t")+1);
+
+	if (ChanName.length() == 0 || SentMessage.length() == 0 || rest.length() == 0)
+		return (NULL);
 
 	if (ChanName.at(0) != '#')
 	{
@@ -49,12 +50,10 @@ Responce *cmdPRIVMSG(Request	*request, command_context context)
 		it = context.chanels->find(ChanName);
 		if (it != context.chanels->end())
 		{
-			cout << "Chan exists" << endl;
 			map<Connection *, bool>		map = it->second.getMap();
 			itIsIn = map.find(&request->getConnection());
 			if (itIsIn != map.end())
 			{
-				cout << "User found in chanel" << endl;
 				it2 = map.begin();
 				while (it2 != map.end())
 				{
@@ -69,7 +68,6 @@ Responce *cmdPRIVMSG(Request	*request, command_context context)
 			}
 			else
 			{
-				cout << "User not found in chanel" << endl;
 				responsestr = ":localhost\\80 401 " + request->getConnection().getClient().getNickname() + " " + ChanName + " :No such nick or channel name\n";
 				Responce *responce = new Responce(request->getConnection(), responsestr);
 				return (responce);

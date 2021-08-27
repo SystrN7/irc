@@ -10,6 +10,9 @@ Responce *cmdNICK(Request	*request, command_context context)
 	string	NickName = message.substr(message.find_first_of(" \t")+1);
 	NickName = NickName.substr(0, NickName.size()-2);
 
+	if (NickName.length() == 0)
+		return (NULL);
+
 	responsestr = ":" + request->getConnection().getClient().getNickname() +  "!~" + request->getConnection().getClient().getNickname() + "@localhost NICK :" + NickName + "\n";
 	request->getConnection().getClient().setNickname(NickName);
 

@@ -17,8 +17,6 @@ Responce *cmdQUIT(Request	*request, command_context context)
 	reason = message.substr(message.find_first_of(" \t")+1);
 	reason = reason.substr(0, reason.size()-2);
 
-	cout << "reason = " << reason << "TEST" << endl;
-
 	if (reason.length() == 0)
 	{
 		responsestr = "ERROR :Closing connection\n";

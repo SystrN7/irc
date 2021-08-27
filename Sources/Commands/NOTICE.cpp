@@ -24,6 +24,9 @@ Responce *cmdNOTICE(Request	*request, command_context context)
 	
 	SentMessage = message.substr(message.find_first_of(" \t")+1);
 
+	if (TargetName.length() == 0 || SentMessage.length() == 0 || rest.length() == 0)
+		return (NULL);
+
 	if (TargetName.at(0) != '#')
 	{
 		responsestr = ":" + request->getConnection().getClient().getNickname() + "!~" + request->getConnection().getClient().getNickname() + "@localhost NOTICE " + TargetName + " " + rest + "\n";

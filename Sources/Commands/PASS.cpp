@@ -10,7 +10,8 @@ Responce *cmdPASS(Request	*request, command_context context)
 	string	Password = message.substr(message.find_first_of(" \t")+1);
 	Password = Password.substr(0, Password.size()-2);
 
-	//cout << "ServPass = " << context.ServPass << "TEST" << endl << "TriedPas = " << Password << "TEST" << endl;
+	if (Password.length() == 0)
+		return (NULL);
 
 	if (request->getConnection().getClient().getIsIdentified() == true || request->getConnection().getClient().getUserName().length() != 0)
 	{

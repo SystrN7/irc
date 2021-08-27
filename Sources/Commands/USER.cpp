@@ -17,6 +17,9 @@ Responce *cmdUSER(Request	*request, command_context context)
 	rest = rest.substr(0, rest.size()-2);
 	username = username.substr(0, username.size()-1);
 
+	if (username.length() == 0 || rest.length() == 0)
+		return (NULL);
+
 	if (request->getConnection().getClient().getIsIdentified() == false && request->getConnection().getClient().getUserName().length() != 0)
 	{	
 		responsestr = "ERROR :Access denied: Bad password?\n";
