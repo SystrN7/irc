@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:52:47 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/26 16:00:51 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/26 18:08:48 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ class ConnectionManager
 				list<Socket *>		_registred_socket;
 				list<Connection *>	_registred_connection;
 				list<Responce *>	_send_queue;
+				list<Request *>		_recv_queue;
 				fd_set				_read_fds;
 				fd_set				_write_fds;
 		private:

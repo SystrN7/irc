@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:47:10 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/26 15:51:42 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/26 18:05:13 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 #include <arpa/inet.h>
 
+#include <list>
 #include <string>
 #include <exception>
 
@@ -52,7 +53,7 @@ class Connection
 		~Connection(void);
 
 		void	printInfo();
-		Request *receiveRequest();
+		list<Request *>receiveRequest();
 		int	sendResponce(Responce &message);
 		Client	&getClient();
 

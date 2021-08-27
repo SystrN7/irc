@@ -6,13 +6,17 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:23:06 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/26 16:02:43 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 10:42:52 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Utilites/Networks/Connection.hpp"
 
-Connection::Connection(int fd, struct sockaddr_in address): _fd(fd), _client_address(address)
+Connection::Connection(int fd, struct sockaddr_in address): 
+	_fd(fd),
+	_client_address(address), 
+	_read_buffer(),
+	_client()
 { }
 
 Connection::~Connection(void)
@@ -43,45 +47,45 @@ int		Connection::sendResponce(Responce &message)
  * weechat -> /close retour = 0 Connection interompue normalement
  * En cas d'erreur il faut sortir le FD du client de la liste de FD à monitorer
  **/
-Request *Connection::receiveRequest()
+list<Request *>Connection::receiveRequest()
 {
-	bool	first = true;
-	int		length;
-	char	buffer = '\0';
+	size_t	i = 0;
+	char	buffer[10000] = {0};
+	ssize_t	length = 0;
 	string	message;
+	size_t	message_lenght = 0;
+	list<Request *>	message_queue;
 
 	message = this->_read_buffer;
-	this->_read_buffer.clear();
 
-	// // STD BUG FIX (because why not ^_^)
-	// if (message.size() == 0)
-	// 	message.append(" ");
+	length = recv(this->_fd, buffer, 10000, 0);
 
-	while (0 == 0)
+	if (length == -1 || length == 0)
+		throw Connection::CloseException();
+
+	message.append(buffer, length);
+
+	
+	while ((i = message.find("\n", i)) != string::npos)
 	{
-		length = recv(this->_fd, &buffer, 1, 0);
-
-		if (length < 0 && errno == EAGAIN)
-		{
-			this->_read_buffer.clear();
-			this->_read_buffer = message;
-			throw Connection::PartialMessageException();
-		}
-		else if (length < 0 || (length == 0 && first))
-			throw Connection::CloseException();
-
-		message.append(1, buffer);
-		if (buffer == '\n')
-			break;
-		first = false;
-	}
-	if (message.size() >= Connection::MAX_IRC_MESSAGES_LENGTH)
-	{
-		Logging::Warning("[Connection] - Message from client was refused because it exceeded the maximum length of 512 characters.");
-		return (NULL);
+		if (message[i] != '\r')
+			message.insert(i, 1, '\r');
+		i += 2;
 	}
 
-	return (new Request(*this , message));
+	while ((message_lenght = message.find("\r\n")) != string::npos)
+	{
+		message_lenght += 2;
+		if (message_lenght > 512)
+			Logging::Warning("[Connection] - Message from client was refused because it exceeded the maximum length of 512 characters.");
+		else
+			message_queue.push_back(new Request(*this, message.substr(0, message_lenght)));
+		message.erase(0, message_lenght + 2);
+	}
+
+	this->_read_buffer = message;
+
+	return (message_queue);
 }
 
 Client	&Connection::getClient() { return (this->_client); };

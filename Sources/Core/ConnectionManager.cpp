@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:52:50 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/26 16:00:43 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/26 18:21:57 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,20 +131,12 @@ Request		*ConnectionManager::NetworkActivitiesHandler()
 		{
 			if (FD_ISSET((*it)->_fd, &this->_read_fds))
 			{
-				Request		*request;
-
 				try
 				{
-					request = (*it)->receiveRequest();
+					list <Request *> requests = (*it)->receiveRequest();
+
+					this->_recv_queue.insert(this->_recv_queue.end(), requests.begin(), requests.end());
 					cout << "[<]-(Client)-Recive Request" << endl;
-					if (request != NULL)
-					{
-						return (request);
-					}
-				}
-				catch(const Connection::PartialMessageException& e)
-				{
-					Logging::Info(e.what());
 				}
 				catch(const Connection::CloseException& e)
 				{
@@ -156,21 +148,12 @@ Request		*ConnectionManager::NetworkActivitiesHandler()
 			}
 		}
 
-		// ! FIND WHY IS NOT WORKING 
-		/*
-		for (list<Responce *>::iterator it = this->_send_queue.begin(); it != this->_send_queue.end(); it++)
+		if (this->_recv_queue.size() > 0)
 		{
-
-			if(FD_ISSET((*it)->getConnection()._fd, &this->_write_fds))
-			{
-				cout << "[>]-(Server)-Send Messages." << endl;
-				(*it)->getConnection().sendResponce(**it);
-
-				FD_CLR((*it)->getConnection()._fd, &this->_write_fds);
-				this->_send_queue.remove((*it));
-				//it = this->_send_queue.begin();
-			}
+			Request	*request;
+			request = this->_recv_queue.front();
+			this->_recv_queue.pop_front();
+			return (request);
 		}
-*/
 	}
 }
