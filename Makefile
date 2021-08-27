@@ -6,7 +6,7 @@
 #    By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/03 15:18:41 by fgalaup           #+#    #+#              #
-#    Updated: 2021/08/27 16:22:07 by seruiz           ###   ########lyon.fr    #
+#    Updated: 2021/08/27 17:11:55 by seruiz           ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,8 @@ SOURCE_FILES	:=	Core/Core.cpp \
 					Commands/KICK.cpp \
 					Commands/PASS.cpp \
 					Commands/KILL.cpp \
-					Commands/QUIT.cpp
+					Commands/QUIT.cpp \
+					Commands/SHUTDOWN.cpp
 
 
 OBJS			:= $(addprefix $(BINARY_DIR)/, $(SOURCE_FILES:.cpp=.o))

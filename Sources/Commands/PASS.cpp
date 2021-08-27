@@ -10,9 +10,6 @@ Responce *cmdPASS(Request	*request, command_context context)
 	string	Password = message.substr(message.find_first_of(" \t")+1);
 	Password = Password.substr(0, Password.size()-2);
 
-	if (Password.length() == 0)
-		return (NULL);
-
 	if (request->getConnection().getClient().getIsIdentified() == true || request->getConnection().getClient().getUserName().length() != 0)
 	{
 		responsestr = ":localhost\\80 462 " + request->getConnection().getClient().getNickname() + " :Connection already registered\n";

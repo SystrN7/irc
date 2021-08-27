@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Core.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 15:55:20 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/27 16:34:05 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 17:12:32 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	Core::registerCommands()
 	this->_command_runner.addCommand("NOTICE", cmdNOTICE);
 	this->_command_runner.addCommand("KILL", cmdKILL);
 	this->_command_runner.addCommand("KICK", cmdKICK);
+	this->_command_runner.addCommand("SHUTDOWN", cmdSHUTDOWN);
 }
 
 void	Core::start()
