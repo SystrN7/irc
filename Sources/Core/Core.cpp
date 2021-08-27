@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Core.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 15:55:20 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/27 17:12:32 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 17:24:42 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,11 @@ void	Core::start()
 
 	this->showHeader();
 	this->registerCommands();
-	signal(SIGINT, &shutdown_server);
+	if (signal(SIGINT, &shutdown_server))
+		Logging::SystemWarning("server shutdown Signal handing faild");
 	Socket*	socket = new Socket(this->_port_number);
 	this->_connection_manager.registerSocket(socket);
 
-	// this->_chanels["index"] = Chanel();
 	
 	context.chanels = &this->_chanels;
 	context.connection_list = &this->_connection_manager;
