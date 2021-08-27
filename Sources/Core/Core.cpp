@@ -6,7 +6,7 @@
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 15:55:20 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/27 14:04:42 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 15:15:23 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	Core::registerCommands()
 	this->_command_runner.addCommand("MODE", NULL);
 	this->_command_runner.addCommand("NOTICE", cmdNOTICE);
 	this->_command_runner.addCommand("AWAY", NULL);
-	this->_command_runner.addCommand("KILL", NULL);
+	this->_command_runner.addCommand("KILL", cmdKILL);
 	this->_command_runner.addCommand("LINKS", NULL);
 	this->_command_runner.addCommand("STATS", NULL);
 	this->_command_runner.addCommand("NJOIN", NULL);

@@ -18,8 +18,11 @@ Responce *cmdUSER(Request	*request, command_context context)
 	username = username.substr(0, username.size()-1);
 
 	if (request->getConnection().getClient().getIsIdentified() == false && request->getConnection().getClient().getUserName().length() != 0)
+	{	
 		responsestr = "ERROR :Access denied: Bad password?\n";
-
+		Responce *responce = new Responce(request->getConnection(), responsestr, true);
+		return (responce);
+	}
 	else if (request->getConnection().getClient().getUserName().length() == 0)
 	{
 		responsestr = ":localhost\\80 001 " + request->getConnection().getClient().getNickname() +  " :Welcome to the Internet Relay Network " + request->getConnection().getClient().getNickname() + "!\n";

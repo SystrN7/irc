@@ -1,12 +1,7 @@
-//KICK #test testuser2 reason
-//Commande envoyée à tout les membres du chan
-//:testuser!~testuser@localhost KICK #test testuser2 :reason
-
-// :irc.example.net 482 testuser2 #test :Your privileges are too low
-
+//ERROR :KILLed by OperatorNickName: message
 #include "Resources/Commands.hpp"
 
-Responce *cmdKICK(Request	*request, command_context context)
+Responce *cmdKILL(Request	*request, command_context context)
 {
 	(void)context;
 	(void)request;
@@ -15,55 +10,39 @@ Responce *cmdKICK(Request	*request, command_context context)
 	string	message;
 	string	ChanName;
 	string	TargetName;
+	string	reason;
 	string	rest;
 
-	message = request->getMessage();
-	ChanName = message.substr(message.find_first_of(" \t")+1);
-	TargetName = ChanName.substr(ChanName.find_first_of(" \t")+1);
-	ChanName = ChanName.substr(0, ChanName.size()-(TargetName.length()));	
-	rest = TargetName.substr(TargetName.find_first_of(" \t")+1);
-	TargetName = TargetName.substr(0, TargetName.size()-(rest.length()));	
-	rest = rest.substr(0, rest.size()-2);
-
-	ChanName = ChanName.substr(0, ChanName.size()-1);
-	TargetName = TargetName.substr(0, TargetName.size()-1);
-
-	map<string, Chanel>::iterator it;
-	map<Connection *, bool>::iterator it2;
-	map<Connection *, bool>::iterator itIsIn;
-	it = context.chanels->find(ChanName);
-	if (it != context.chanels->end())
+	if (request->getConnection().getClient().getIsOperator() == false)
 	{
-		map<Connection *, bool>		map = it->second.getMap();
-		itIsIn = map.find(&request->getConnection());
-		if (itIsIn != map.end())
+		responsestr = ":localhost\\80 482 " + request->getConnection().getClient().getNickname() + " " + ChanName + " :Your privileges are too low\n";
+		Responce *responce = new Responce(request->getConnection(), responsestr);
+		return (responce);
+	}
+
+	message = request->getMessage();
+	TargetName = message.substr(message.find_first_of(" \t")+1);
+	reason = TargetName.substr(TargetName.find_first_of(" \t")+1);
+
+	TargetName = TargetName.substr(0, TargetName.size()-(reason.length()));		
+
+	TargetName = TargetName.substr(0, TargetName.size()-1);
+	reason = reason.substr(0, reason.size()-2);
+
+	list<Connection *>	connectionList;
+	connectionList = context.connection_list->getConnectionList();
+	list<Connection *>::iterator it;
+
+	it = connectionList.begin();
+	while (it != connectionList.end())
+	{
+		if ((*it)->getClient().getNickname() == TargetName)
 		{
-			if (request->getConnection().getClient().getIsOperator() == true || itIsIn->second == true)
-			{
-				it2 = map.begin();
-				while (it2 != map.end())
-				{
-					if (it2->first->getClient().getNickname() == TargetName)
-						it->second.RemoveClient(it2->first);
-					responsestr = ":" + request->getConnection().getClient().getNickname() + "!~" + request->getConnection().getClient().getNickname() + "@localhost KICK " + ChanName + " " + TargetName + " " + rest + "\n";
-					Responce *responce = new Responce(*it2->first, responsestr);
-					context.connection_list->addResponceToSendQueue(responce);
-					it2++;
-				}
-			}
-			else
-			{
-				responsestr = ":localhost\\80 482 " + request->getConnection().getClient().getNickname() + " " + ChanName + " :Your privileges are too low\n";
-				Responce *responce = new Responce(request->getConnection(), responsestr);
-				return (responce);
-			}
+			responsestr = "ERROR :KILLed by " + request->getConnection().getClient().getNickname() + " " + reason +"\n";
+			Responce *responce = new Responce((**it), responsestr, true);
+			context.connection_list->addResponceToSendQueue(responce);
 		}
-		else
-		{
-			responsestr = ":localhost\\80 401 " + request->getConnection().getClient().getNickname() + " " + ChanName + " :No such nick or channel name\n";
-			Responce *responce = new Responce(request->getConnection(), responsestr);
-			return (responce);
-		}
+		it++;
 	}
 	return (NULL);
 }

@@ -36,7 +36,7 @@ Responce *cmdPRIVMSG(Request	*request, command_context context)
 			if ((*itusr)->getClient().getNickname() == ChanName)
 			{
 				Responce *responce = new Responce(**itusr, responsestr);
-				return (responce);
+				context.connection_list->addResponceToSendQueue(responce);
 			}
 			itusr++;
 		}
