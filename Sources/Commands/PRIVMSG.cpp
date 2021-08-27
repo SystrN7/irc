@@ -1,4 +1,5 @@
 //PRIVMSG ServName/UserName :Message
+//:irc.example.net 401 testuser #test :No such nick or channel name
 
 #include "Resources/Commands.hpp"
 
@@ -38,26 +39,35 @@ Responce *cmdPRIVMSG(Request	*request, command_context context)
 			itusr++;
 		}
 	}
-
 	else
 	{
 		map<string, Chanel>::iterator it;
 		map<Connection *, bool>::iterator it2;
+		map<Connection *, bool>::iterator itIsIn;
 		it = context.chanels->find(ChanName);
 		if (it != context.chanels->end())
 		{
-			cout << it->first << endl;
 			map<Connection *, bool>		map = it->second.getMap();
-			it2 = map.begin();
-			while (it2 != map.end())
+			itIsIn = map.find(&request->getConnection());
+			if (itIsIn != map.end())
 			{
-				if (&request->getConnection() != it2->first)
+				it2 = map.begin();
+				while (it2 != map.end())
 				{
-					responsestr = ":" + request->getConnection().getClient().getNickname() + "!~" + request->getConnection().getClient().getNickname() + "@localhost PRIVMSG " + SentMessage + "\n";
-					Responce *responce = new Responce(*it2->first, responsestr);
-					context.connection_list->addResponceToSendQueue(responce);
+					if (&request->getConnection() != it2->first)
+					{
+						responsestr = ":" + request->getConnection().getClient().getNickname() + "!~" + request->getConnection().getClient().getNickname() + "@localhost PRIVMSG " + SentMessage + "\n";
+						Responce *responce = new Responce(*it2->first, responsestr);
+						context.connection_list->addResponceToSendQueue(responce);
+					}
+					it2++;
 				}
-				it2++;
+			}
+			else
+			{
+				responsestr = ":localhost\\80 401 " + request->getConnection().getClient().getNickname() + " " + ChanName + " :No such nick or channel name\n";
+				Responce *responce = new Responce(request->getConnection(), responsestr);
+				return (responce);
 			}
 		}
 	}

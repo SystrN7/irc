@@ -6,7 +6,7 @@
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 15:55:20 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/26 18:58:10 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 09:58:37 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	Core::registerCommands()
 	this->_command_runner.addCommand("WHO", NULL);
 	this->_command_runner.addCommand("WHOIS", NULL);
 	this->_command_runner.addCommand("WHOWAS", NULL);
-	this->_command_runner.addCommand("PART", NULL);
+	this->_command_runner.addCommand("PART", cmdPART);
 	this->_command_runner.addCommand("MODE", NULL);
 	this->_command_runner.addCommand("NOTICE", cmdNOTICE);
 	this->_command_runner.addCommand("AWAY", NULL);

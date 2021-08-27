@@ -6,7 +6,7 @@
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 17:52:45 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/26 18:57:16 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 09:57:59 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ Responce	*cmdUSER(Request	*request, command_context context);
 Responce	*cmdOPER(Request	*request, command_context context);
 Responce	*cmdPING(Request	*request, command_context context);
 Responce	*cmdJOIN(Request	*request, command_context context);
+Responce	*cmdPART(Request	*request, command_context context);
 Responce	*cmdPRIVMSG(Request	*request, command_context context);
 Responce	*cmdNOTICE(Request	*request, command_context context);
 

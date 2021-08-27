@@ -6,7 +6,7 @@
 #    By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/03 15:18:41 by fgalaup           #+#    #+#              #
-#    Updated: 2021/08/26 18:57:47 by seruiz           ###   ########lyon.fr    #
+#    Updated: 2021/08/27 09:58:10 by seruiz           ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ SOURCE_FILES	:=	Core/Core.cpp \
 					Commands/PING.cpp \
 					Commands/USER.cpp \
 					Commands/JOIN.cpp \
+					Commands/PART.cpp \
 					Commands/PRIVMSG.cpp \
 					Commands/NOTICE.cpp
 
