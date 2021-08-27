@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 15:55:20 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/27 16:07:37 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/27 16:34:05 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,51 +77,19 @@ void	Core::parsingParams(const string port, const string password, const string 
 
 void	Core::registerCommands()
 {
-	this->_command_runner.addCommand("LIST", NULL);
+
 	this->_command_runner.addCommand("USER", cmdUSER);
 	this->_command_runner.addCommand("NICK", cmdNICK);
 	this->_command_runner.addCommand("PING", cmdPING);
-	this->_command_runner.addCommand("PONG", NULL);
 	this->_command_runner.addCommand("QUIT", cmdQUIT);
 	this->_command_runner.addCommand("PASS", cmdPASS);
-	this->_command_runner.addCommand("SERVER", NULL);
-	this->_command_runner.addCommand("SQUIT", NULL);
-	this->_command_runner.addCommand("CONNECT", NULL);
 	this->_command_runner.addCommand("OPER", cmdOPER);
-	this->_command_runner.addCommand("ERROR", NULL);
-	this->_command_runner.addCommand("ADMIN", NULL);
-	this->_command_runner.addCommand("MOTD", NULL);
-	this->_command_runner.addCommand("USERHOST", NULL);
-	this->_command_runner.addCommand("VERSION", NULL);
-	this->_command_runner.addCommand("INFO", NULL);
-	this->_command_runner.addCommand("TIME", NULL);
 	this->_command_runner.addCommand("JOIN", cmdJOIN);
 	this->_command_runner.addCommand("PRIVMSG", cmdPRIVMSG);
-	this->_command_runner.addCommand("INVITE", NULL);
-	this->_command_runner.addCommand("NAMES", NULL);
-	this->_command_runner.addCommand("WHO", NULL);
-	this->_command_runner.addCommand("WHOIS", NULL);
-	this->_command_runner.addCommand("WHOWAS", NULL);
 	this->_command_runner.addCommand("PART", cmdPART);
-	this->_command_runner.addCommand("MODE", NULL);
 	this->_command_runner.addCommand("NOTICE", cmdNOTICE);
-	this->_command_runner.addCommand("AWAY", NULL);
 	this->_command_runner.addCommand("KILL", cmdKILL);
-	this->_command_runner.addCommand("LINKS", NULL);
-	this->_command_runner.addCommand("STATS", NULL);
-	this->_command_runner.addCommand("NJOIN", NULL);
-	this->_command_runner.addCommand("LUSERS", NULL);
-	this->_command_runner.addCommand("ISON", NULL);	
-	this->_command_runner.addCommand("USERS", NULL);
-	this->_command_runner.addCommand("TOPIC", NULL);
 	this->_command_runner.addCommand("KICK", cmdKICK);
-	this->_command_runner.addCommand("TRACE", NULL);
-	this->_command_runner.addCommand("DIE", NULL);
-	this->_command_runner.addCommand("WALLOPS", NULL);
-	this->_command_runner.addCommand("REHASH", NULL);
-	this->_command_runner.addCommand("SERVICE", NULL);
-	this->_command_runner.addCommand("SERVLIST", NULL);
-	this->_command_runner.addCommand("SQUERY", NULL);
 }
 
 void	Core::start()
