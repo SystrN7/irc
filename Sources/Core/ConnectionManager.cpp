@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:52:50 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/27 17:07:52 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/28 10:14:54 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,32 @@ void	ConnectionManager::addResponceToSendQueue(Responce *responce)
 
 void	ConnectionManager::removeConnection(Connection *connection)
 {
+	// Remove Responce use this connection pending in queue list.
+	list<Responce *>::iterator its = this->_send_queue.begin();
+	while (its != this->_send_queue.end())
+	{
+		if(&((*its)->getConnection()) == connection)
+		{
+			delete *its;
+			this->_send_queue.remove(*its);
+		}
+		else
+			its++;
+	}
+
+	// Remove Request use this connection pending in queue list.
+	list<Request *>::iterator itr = this->_recv_queue.begin();
+	while (itr != this->_recv_queue.end())
+	{
+		if(&((*itr)->getConnection()) == connection)
+		{
+			delete *itr;
+			this->_recv_queue.remove(*itr);
+		}
+		else
+			itr++;
+	}
+	
 	this->_registred_connection.remove(connection);
 	delete connection;
 }
