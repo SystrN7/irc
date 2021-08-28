@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 17:52:45 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/27 15:09:39 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/28 12:55:54 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ class Chanel;
 class Client
 {
 	private:
+		Client(Client &rhs);
+		Client(const Client &rhs);
+		Client	&operator=(const Client &rhs);
 		/* data */
 		string	_nick;
 		string	_user;

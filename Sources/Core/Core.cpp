@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Core.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 15:55:20 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/27 17:24:42 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/28 15:18:20 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,21 @@ void	Core::start()
 
 	while (7 == 7)
 	{
-		for (map<string, Chanel>::iterator it = this->_chanels.begin() ; it != this->_chanels.end() ; it++)
-		{
+
+
+			// for (map<Connection *, bool>::iterator itChan_map = chan_con_map.begin() ; itChan_map != chan_con_map.end() ; itChan_map++)
+			// {
+			// 	//itChan_map->first
+			// 	list<Connection *> manager_con_list = this->_connection_manager.getConnectionList();
+				
+			// 	if (find(manager_con_list.begin(), manager_con_list.end(), itChan_map->first) == manager_con_list.end())
+			// 	{
+			// 		(*it).second.RemoveClient(itChan_map->first);
+			// 		itChan_map = chan_con_map.begin();
+			// 	}
+
+				//list<Connection *>::iterator itManagerList = manager_con_list.begin();
+			/*
 			if (it->second.getMap().size() == 0)
 			{
 				this->_chanels.erase(it);
@@ -123,7 +136,42 @@ void	Core::start()
 			}
 			if (it == this->_chanels.end())
 				break;
+			*/
+
+		map<string, Chanel>::iterator it = this->_chanels.begin() ;
+		while (it != this->_chanels.end())
+		{
+			map<Connection *, bool> chan_con_map = it->second.getMap();
+			
+			map<Connection *, bool>::iterator itChan_map = chan_con_map.begin() ;
+			while (itChan_map != chan_con_map.end() && chan_con_map.size() != 0)
+			{
+				list<Connection *> manager_con_list = this->_connection_manager.getConnectionList();
+				list<Connection *>::iterator it_conn = manager_con_list.begin();
+				while (it_conn != manager_con_list.end())
+				{
+					if (itChan_map->first == *it_conn)
+						break;
+					it_conn++;
+				}
+				if (it_conn == manager_con_list.end())
+				{
+					(*it).second.RemoveClient(itChan_map->first);
+					chan_con_map = it->second.getMap();
+					itChan_map = chan_con_map.begin();
+				}
+				else
+					itChan_map++;
+			}
+			if (it->second.getMap().size() == 0)
+			{
+				this->_chanels.erase(it);
+				it= this->_chanels.begin();
+			}
+			else
+				it++;
 		}
+
 
 		Request *request = this->_connection_manager.NetworkActivitiesHandler();
 		if (request)
@@ -135,6 +183,9 @@ void	Core::start()
 				this->_connection_manager.addResponceToSendQueue(responce);
 			delete request;
 		}
+
+
+
 		// shutdown server
 		if (_shutdown)
 			break;
