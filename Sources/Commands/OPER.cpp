@@ -15,11 +15,11 @@ Responce *cmdOPER(Request	*request, command_context context)
 
 	if (trypass == truepass)
 	{
-		responsestr = ":localhost\\80 381 " + request->getConnection().getClient().getNickname() +  " :You are now an IRC operator\n";
+		responsestr = ":localhost 381 " + request->getConnection().getClient().getNickname() +  " :You are now an IRC operator\n";
 		request->getConnection().getClient().setIsOperator(true);
 	}
 	else
-		responsestr = ":localhost\\80 481 " + request->getConnection().getClient().getNickname() +  " :Permission Denied- You're not an IRC operator\n";
+		responsestr = ":localhost 481 " + request->getConnection().getClient().getNickname() +  " :Permission Denied- You're not an IRC operator\n";
 	Responce *responce = new Responce(request->getConnection(), responsestr);
 	return (responce);
 }

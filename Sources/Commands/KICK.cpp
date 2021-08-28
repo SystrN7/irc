@@ -56,14 +56,14 @@ Responce *cmdKICK(Request	*request, command_context context)
 			}
 			else
 			{
-				responsestr = ":localhost\\80 482 " + request->getConnection().getClient().getNickname() + " " + ChanName + " :Your privileges are too low\n";
+				responsestr = ":localhost 482 " + request->getConnection().getClient().getNickname() + " " + ChanName + " :Your privileges are too low\n";
 				Responce *responce = new Responce(request->getConnection(), responsestr);
 				return (responce);
 			}
 		}
 		else
 		{
-			responsestr = ":localhost\\80 401 " + request->getConnection().getClient().getNickname() + " " + ChanName + " :No such nick or channel name\n";
+			responsestr = ":localhost 401 " + request->getConnection().getClient().getNickname() + " " + ChanName + " :No such nick or channel name\n";
 			Responce *responce = new Responce(request->getConnection(), responsestr);
 			return (responce);
 		}

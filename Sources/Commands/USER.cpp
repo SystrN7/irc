@@ -31,11 +31,11 @@ Responce *cmdUSER(Request	*request, command_context context)
 	}
 	else if (request->getConnection().getClient().getUserName().length() == 0)
 	{
-		responsestr = ":localhost\\80 001 " + request->getConnection().getClient().getNickname() +  " :Welcome to the Internet Relay Network " + request->getConnection().getClient().getNickname() + "!\n";
+		responsestr = ":localhost 001 " + request->getConnection().getClient().getNickname() +  " :Welcome to the Internet Relay Network " + request->getConnection().getClient().getNickname() + "!\n";
 		request->getConnection().getClient().setUserName(username);
 	}
 	else
-		responsestr = ":localhost\\80 462 " + request->getConnection().getClient().getNickname() + " :Connection already registered\n";
+		responsestr = ":localhost 462 " + request->getConnection().getClient().getNickname() + " :Connection already registered\n";
 
 	Responce *responce = new Responce(request->getConnection(), responsestr);
 	return (responce);

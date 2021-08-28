@@ -23,7 +23,7 @@ Responce *cmdPART(Request	*request, command_context context)
 
 	if (ChanName.at(0) != '#')
 	{
-		responsestr = ":localhost\\80 403 " + request->getConnection().getClient().getNickname() +  " :No such nick/channel\n";
+		responsestr = ":localhost 403 " + request->getConnection().getClient().getNickname() +  " :No such nick/channel\n";
 		Responce *responce = new Responce(request->getConnection(), responsestr);
 		return (responce);
 	}
@@ -55,7 +55,7 @@ Responce *cmdPART(Request	*request, command_context context)
 			}
 		}
 		else
-			responsestr = ":localhost\\80 403 " + request->getConnection().getClient().getNickname() +  " :No such nick/channel\n";
+			responsestr = ":localhost 403 " + request->getConnection().getClient().getNickname() +  " :No such nick/channel\n";
 	}
 
 	Responce *responce = new Responce(request->getConnection(), responsestr);
