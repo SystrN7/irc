@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:23:06 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/28 10:39:48 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/28 10:52:24 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@ Connection::Connection(int fd, struct sockaddr_in address):
 
 Connection::~Connection(void)
 {
-	for (list<Chanel *>::iterator it = this->_chanels.begin() ; it != this->_chanels.end(); it++)
+	list<Chanel *>::iterator it = this->_chanels.begin();
+	while (it != this->_chanels.end())
+	{
 		(*it)->RemoveClient(this);
-	this->_chanels.clear();
+		it = this->_chanels.begin();
+	}
 	close(this->_fd);
 }
 
