@@ -51,6 +51,7 @@ Responce *cmdPRIVMSG(Request	*request, command_context context)
 		if (it != context.chanels->end())
 		{
 			map<Connection *, bool>		map = it->second.getMap();
+			cout << "Context map size = " << map.size() << endl;
 			itIsIn = map.find(&request->getConnection());
 			if (itIsIn != map.end())
 			{

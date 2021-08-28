@@ -6,7 +6,7 @@
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 15:55:20 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/28 15:18:20 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/28 15:53:15 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,30 +114,6 @@ void	Core::start()
 
 	while (7 == 7)
 	{
-
-
-			// for (map<Connection *, bool>::iterator itChan_map = chan_con_map.begin() ; itChan_map != chan_con_map.end() ; itChan_map++)
-			// {
-			// 	//itChan_map->first
-			// 	list<Connection *> manager_con_list = this->_connection_manager.getConnectionList();
-				
-			// 	if (find(manager_con_list.begin(), manager_con_list.end(), itChan_map->first) == manager_con_list.end())
-			// 	{
-			// 		(*it).second.RemoveClient(itChan_map->first);
-			// 		itChan_map = chan_con_map.begin();
-			// 	}
-
-				//list<Connection *>::iterator itManagerList = manager_con_list.begin();
-			/*
-			if (it->second.getMap().size() == 0)
-			{
-				this->_chanels.erase(it);
-				it = this->_chanels.begin();
-			}
-			if (it == this->_chanels.end())
-				break;
-			*/
-
 		map<string, Chanel>::iterator it = this->_chanels.begin() ;
 		while (it != this->_chanels.end())
 		{
@@ -183,8 +159,6 @@ void	Core::start()
 				this->_connection_manager.addResponceToSendQueue(responce);
 			delete request;
 		}
-
-
 
 		// shutdown server
 		if (_shutdown)

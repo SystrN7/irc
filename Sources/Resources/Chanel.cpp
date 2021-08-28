@@ -6,7 +6,7 @@
 /*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:03:11 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/28 15:18:40 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/28 15:46:36 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ void	Chanel::AddClient(Connection *NewConnection)
 
 void	Chanel::RemoveClient(Connection *RemovedClient) 
 {
+	cout << "Before remove size = " << this->_map.size() << endl;
 	this->_map.erase(RemovedClient);
+	cout << "After remove size = " << this->_map.size() << endl;
 }
 
 void	Chanel::AddOpRole(Connection *NewOp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ConnectionManager.cpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:52:50 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/28 10:14:54 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/28 15:58:51 by seruiz           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	ConnectionManager::removeConnection(Connection *connection)
 		{
 			delete *its;
 			this->_send_queue.remove(*its);
+			its = this->_send_queue.begin();
 		}
 		else
 			its++;
@@ -83,6 +84,7 @@ void	ConnectionManager::removeConnection(Connection *connection)
 		{
 			delete *itr;
 			this->_recv_queue.remove(*itr);
+			itr = this->_recv_queue.begin();
 		}
 		else
 			itr++;
@@ -164,6 +166,8 @@ Request		*ConnectionManager::NetworkActivitiesHandler()
 					this->removeConnection(&responce->getConnection());
 				delete responce;
 
+				return (NULL);
+				
 				it = this->_send_queue.begin();
 				ite = this->_send_queue.end();
 			}
