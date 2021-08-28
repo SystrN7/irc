@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Chanel.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:03:11 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/28 12:30:13 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/28 13:26:48 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,51 +32,12 @@ Chanel::~Chanel()
 
 void	Chanel::AddClient(Connection *NewConnection)
 {
-	map<Connection *, bool>::iterator it = this->_map.begin();
-
-	cout << "Before add " << endl;
-	while (it != this->_map.end())
-	{
-		cout << it->first->getClient().getNickname() << endl;
-		it++;
-	}
-
 	this->_map.insert (std::pair<Connection *,bool>(NewConnection, NewConnection->getClient().getIsOperator()));
-	NewConnection->registerChanel(this);
-
-	it = this->_map.begin();
-	cout << "After  add " <<endl;
-	while (it != this->_map.end())
-	{
-		cout << it->first->getClient().getNickname() << endl;
-		it++;
-	}
-	cout <<endl;
 }
 
 void	Chanel::RemoveClient(Connection *RemovedClient) 
 {
-	map<Connection *, bool>::iterator it = this->_map.begin();
-
-	cout << "Before remove " << endl;
-	while (it != this->_map.end())
-	{
-		cout << it->first->getClient().getNickname() << endl;
-		it++;
-	}
-
 	this->_map.erase(RemovedClient);
-	RemovedClient->unregisterChanel(this);
-
-	it = this->_map.begin();
-	cout << "After  remove " << endl;
-	while (it != this->_map.end())
-	{
-		cout << it->first->getClient().getNickname() << endl;
-		it++;
-	}
-	cout <<endl;
-
 }
 
 void	Chanel::AddOpRole(Connection *NewOp)

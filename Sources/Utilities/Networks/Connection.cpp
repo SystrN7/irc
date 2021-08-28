@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Connection.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:23:06 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/28 12:06:50 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2021/08/28 13:29:55 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Utilites/Networks/Connection.hpp"
 
 Connection::Connection(int fd, struct sockaddr_in address): 
-	_chanels(),
 	_fd(fd),
 	_client_address(address), 
 	_read_buffer(),
@@ -22,13 +21,6 @@ Connection::Connection(int fd, struct sockaddr_in address):
 
 Connection::~Connection(void)
 {
-	cout << "Connection DESTRUCTOR  map size = " << this->_chanels.size() << endl;
-	list<Chanel *>::iterator it = this->_chanels.begin();
-	while (it != this->_chanels.end())
-	{
-		(*it)->RemoveClient(this);
-		it = this->_chanels.begin();
-	}
 	close(this->_fd);
 }
 
@@ -98,11 +90,5 @@ list<Request *>Connection::receiveRequest()
 
 	return (message_queue);
 }
-
-void	Connection::registerChanel(Chanel *chanel)
-{ this->_chanels.push_back(chanel); }
-
-void	Connection::unregisterChanel(Chanel *chanel)
-{ this->_chanels.remove(chanel); }
 
 Client	&Connection::getClient() { return (this->_client); };

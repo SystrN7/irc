@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:47:10 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/27 15:09:58 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2021/08/28 13:29:28 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 #include "Resources/Request.hpp"
 #include "Resources/Responce.hpp"
-#include "Resources/Chanel.hpp"
 #include "Resources/Client.hpp"
 
 #include <unistd.h>
@@ -38,7 +37,6 @@ class Connection
 	static const int MAX_IRC_MESSAGES_LENGTH = 512;
 
 	private:
-		list<Chanel *>		_chanels;
 		int					_fd;
 		struct sockaddr_in	_client_address;
 		string				_read_buffer;
@@ -55,8 +53,6 @@ class Connection
 		~Connection(void);
 
 		void	printInfo();
-		void	registerChanel(Chanel *chanel);
-		void	unregisterChanel(Chanel *chanel);
 		list<Request *>receiveRequest();
 		int	sendResponce(Responce &message);
 		Client	&getClient();
