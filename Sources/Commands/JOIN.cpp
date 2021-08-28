@@ -16,12 +16,14 @@ Responce *cmdJOIN(Request	*request, command_context context)
 	ChanName = ChanName.substr(0, ChanName.size()-(Password.length()));	
 	Password = Password.substr(0, Password.size()-2);
 
+	cout << ChanName << "TEST" << endl << Password << "TEST" << endl;
+
 	if (ChanName.length() == 0)
 		ChanName = Password;
 	else
 		ChanName = ChanName.substr(0, ChanName.size()-1);
 
-	if (ChanName.at(0) != '#')
+	if (ChanName.length() == 0 || ChanName.at(0) != '#')
 	{
 		responsestr = ":localhost 403 " + request->getConnection().getClient().getNickname() +  " :No such nick/channel\n";
 		Responce *responce = new Responce(request->getConnection(), responsestr);
@@ -66,9 +68,13 @@ Responce *cmdJOIN(Request	*request, command_context context)
 	{
 		//Il faut le créer (string name, Client *creator);
 		if (Password != ChanName)
+		{
 			context.chanels->insert ( pair<string,Chanel>(ChanName, Chanel(ChanName, &(request->getConnection()), Password)) );
+		}
 		else
+		{
 			context.chanels->insert ( pair<string,Chanel>(ChanName, Chanel(ChanName, &(request->getConnection())) ));
+		}
 		responsestr = ":" + request->getConnection().getClient().getNickname() + "!~" + request->getConnection().getClient().getNickname() + "@localhost JOIN :" + ChanName + "\n";
 	}
 
