@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ConnectionManager.cpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:52:50 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/28 15:58:51 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2022/01/12 14:35:51 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ ConnectionManager::ConnectionManager(void):
 	_registred_socket(),
 	_registred_connection(),
 	_send_queue(),
+	_recv_queue(),
 	_read_fds(),
 	_write_fds()
 {
@@ -47,21 +48,28 @@ ConnectionManager::~ConnectionManager(void)
 
 void	ConnectionManager::registerSocket(Socket *socket)
 {
+	FD_SET(socket->fd_socket, &this->_read_fds);
 	this->_registred_socket.push_back(socket);
 }
 
 void	ConnectionManager::registerConnection(Connection *connection)
 {
+	FD_SET(connection->_fd, &this->_read_fds);
 	this->_registred_connection.push_back(connection);
 }
 
 void	ConnectionManager::addResponceToSendQueue(Responce *responce)
 {
+	FD_SET(responce->getConnection()._fd, &this->_write_fds);
 	this->_send_queue.push_back(responce);
 }
 
 void	ConnectionManager::removeConnection(Connection *connection)
 {
+	// Remove from monitored fd set
+	FD_CLR(connection->_fd, &this->_read_fds);
+	FD_CLR(connection->_fd, &this->_write_fds);
+
 	// Remove Responce use this connection pending in queue list.
 	list<Responce *>::iterator its = this->_send_queue.begin();
 	while (its != this->_send_queue.end())
@@ -90,57 +98,52 @@ void	ConnectionManager::removeConnection(Connection *connection)
 			itr++;
 	}
 	
+	// Detete Connection
 	this->_registred_connection.remove(connection);
 	delete connection;
 }
 
-void ConnectionManager::refreshMonitoredFileDescriptor()
+int			ConnectionManager::getMaxFd()
 {
-	// Clear previous fds
-	FD_ZERO(&this->_read_fds);
-	FD_ZERO(&this->_write_fds);
+	int	max_fd = 1;
 
-	// Add socket fds (listen)
 	for (list<Socket *>::iterator it = this->_registred_socket.begin(); it != this->_registred_socket.end(); it++)
-		FD_SET((*it)->fd_socket, &this->_read_fds);
+		if (max_fd < (*it)->fd_socket)
+			max_fd = (*it)->fd_socket;
 
-	// Add Connection (read)
 	for (list<Connection *>::iterator it = this->_registred_connection.begin(); it != this->_registred_connection.end(); it++)
-		FD_SET((*it)->_fd, &this->_read_fds);
-
-	// Add send queue (write)
-	for (list<Responce *>::iterator it = this->_send_queue.begin(); it != this->_send_queue.end(); it++)
-		FD_SET((*it)->getConnection()._fd, &this->_write_fds);
+		if (max_fd < (*it)->_fd)
+			max_fd = (*it)->_fd;
+	
+	return (max_fd);
 }
-
-#include <iostream>
-#include <fstream>
-#include <sstream>
 
 Request		*ConnectionManager::NetworkActivitiesHandler()
 {
 	while (0 == 0)
 	{
 		struct timeval timeout;
+		fd_set read_fds = this->_read_fds;
+		fd_set write_fds = this->_write_fds;
+
 		int select_status = 0;
-		
 		do
 		{
 			timeout.tv_sec = 0;
 			timeout.tv_usec = 0;
-			this->refreshMonitoredFileDescriptor();
-			select_status = select(FD_SETSIZE, &this->_read_fds, &this->_write_fds, NULL, &timeout);
+			select_status = select(this->getMaxFd() + 1, &read_fds, &write_fds, NULL, NULL);
 
 			if (_shutdown)
 				return (NULL);
 		} while (select_status == 0);
+
 		if ( select_status < 0)
 			Logging::SystemFatal("[Select]-Fd monitoring failed");
 		
 		// Check socket (incoming connection)
 		for (list<Socket *>::iterator it = this->_registred_socket.begin(); it != this->_registred_socket.end(); it++)
 		{
-			if (FD_ISSET((*it)->fd_socket, &this->_read_fds))
+			if (FD_ISSET((*it)->fd_socket, &read_fds))
 			{
 				cout << "[+]-[Connection](Client)-New client request." << endl;
 				Connection	*connection = (*it)->getConnection();
@@ -153,11 +156,12 @@ Request		*ConnectionManager::NetworkActivitiesHandler()
 		list<Responce *>::iterator ite = this->_send_queue.end();
 		while (it != ite)
 		{
-			if(FD_ISSET((*it)->getConnection()._fd, &this->_write_fds))
+			if(FD_ISSET((*it)->getConnection()._fd, &write_fds))
 			{
 				Responce	*responce;
 
 				cout << "[>]-(Server)-Send Messages." << endl;
+				FD_CLR((*it)->getConnection()._fd, &this->_write_fds);
 				responce = *it;
 				responce->getConnection().sendResponce(*responce);
 
@@ -165,19 +169,23 @@ Request		*ConnectionManager::NetworkActivitiesHandler()
 				if (responce->getDestroyConnection())
 					this->removeConnection(&responce->getConnection());
 				delete responce;
-
-				return (NULL);
 				
 				it = this->_send_queue.begin();
 				ite = this->_send_queue.end();
 			}
-			it++;
+			else
+				it++;
 		}
 
 		// Check incoming Request (reading)
-		for (list<Connection *>::iterator it = this->_registred_connection.begin(); it != this->_registred_connection.end(); it++)
+		for
+		(
+			list<Connection *>::iterator it = this->_registred_connection.begin();
+			it != this->_registred_connection.end();
+			it++
+		)
 		{
-			if (FD_ISSET((*it)->_fd, &this->_read_fds))
+			if (FD_ISSET((*it)->_fd, &read_fds))
 			{
 				try
 				{

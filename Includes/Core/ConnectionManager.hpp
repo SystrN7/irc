@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ConnectionManager.hpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:52:47 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/27 15:01:21 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2022/01/10 15:48:14 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ class ConnectionManager
 		private:
 				ConnectionManager(const ConnectionManager &rhs);
 				ConnectionManager		&operator=(const ConnectionManager &rhs);
+				int		getMaxFd();
 		public:
 				ConnectionManager(void);
 				virtual ~ConnectionManager(void);
 				void	registerSocket(Socket *socket);
-				void	refreshMonitoredFileDescriptor();
 				void	registerConnection(Connection *connection);
 				void	removeConnection(Connection *connection);
 				void	addResponceToSendQueue(Responce *responce);

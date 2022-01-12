@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:23:06 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/28 13:29:55 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2022/01/10 14:34:22 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int		Connection::sendResponce(Responce &message)
 	return (status);
 }
 
-
 /**
  * La valeur de retour sera 0 si le pair a effectué un arrêt normal
  * weechat -> /exit retour = -1 Connection interompue brutalement
@@ -64,7 +63,6 @@ list<Request *>Connection::receiveRequest()
 	if (length == -1 || length == 0)
 		throw Connection::CloseException();
 
-	cout << "=======1==========" << endl;
 	message.append(buffer, length);
 
 
@@ -83,8 +81,6 @@ list<Request *>Connection::receiveRequest()
 
 		message.erase(0, message_lenght);
 	}
-
-	cout << "=======2==========" << endl;
 
 	this->_read_buffer = message;
 
