@@ -10,6 +10,7 @@ ircserv
 
 # Test (Temps)
 messges.irc
+weechat*
 
 # Macos
 .DS_Store
