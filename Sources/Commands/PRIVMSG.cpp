@@ -28,18 +28,26 @@ Responce *cmdPRIVMSG(Request	*request, command_context context)
 
 	if (ChanName.at(0) != '#')
 	{
-		responsestr = ":" + request->getConnection().getClient().getNickname() + "!~" + request->getConnection().getClient().getNickname() + "@localhost PRIVMSG " + SentMessage + "\n";
-		
-		list<Connection *>	connectionList = context.connection_list->getConnectionList();
-		list<Connection *>::iterator itusr = connectionList.begin();
-		while (itusr != connectionList.end())
+		if (ChanName == "tob" || ChanName == "Tob")
 		{
-			if ((*itusr)->getClient().getNickname() == ChanName)
+			responsestr = ":Tob!~Tob@localhost PRIVMSG " + request->getConnection().getClient().getNickname() + " :" + "Hello I am tob the bot !" + "\n";
+			Responce *responce = new Responce(request->getConnection(), responsestr);
+			context.connection_list->addResponceToSendQueue(responce);
+		}
+		else
+		{
+			responsestr = ":" + request->getConnection().getClient().getNickname() + "!~" + request->getConnection().getClient().getNickname() + "@localhost PRIVMSG " + SentMessage + "\n";
+			list<Connection *>	connectionList = context.connection_list->getConnectionList();
+			list<Connection *>::iterator itusr = connectionList.begin();
+			while (itusr != connectionList.end())
 			{
-				Responce *responce = new Responce(**itusr, responsestr);
-				context.connection_list->addResponceToSendQueue(responce);
+				if ((*itusr)->getClient().getNickname() == ChanName)
+				{
+					Responce *responce = new Responce(**itusr, responsestr);
+					context.connection_list->addResponceToSendQueue(responce);
+				}
+				itusr++;
 			}
-			itusr++;
 		}
 	}
 	else

@@ -29,7 +29,7 @@ Responce *cmdUSER(Request	*request, command_context context)
 		Responce *responce = new Responce(request->getConnection(), responsestr, true);
 		return (responce);
 	}
-	else if (request->getConnection().getClient().getUserName().length() == 0)
+	else if (request->getConnection().getClient().getUserName().length() == 0 && username == request->getConnection().getClient().getNickname())
 	{
 		responsestr = ":localhost 001 " + request->getConnection().getClient().getNickname() +  " :Welcome to the Internet Relay Network " + request->getConnection().getClient().getNickname() + "!\n";
 		request->getConnection().getClient().setUserName(username);

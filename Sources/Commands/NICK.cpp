@@ -12,6 +12,11 @@ Responce *cmdNICK(Request	*request, command_context context)
 
 	if (NickName.length() == 0)
 		return (NULL);
+	
+	// Check Bot Name (Tob)
+	if (NickName ==  "tob" || NickName ==  "Tob")
+		return  (NULL);
+
 
 	responsestr = ":" + request->getConnection().getClient().getNickname() +  "!~" + request->getConnection().getClient().getNickname() + "@localhost NICK :" + NickName + "\n";
 	request->getConnection().getClient().setNickname(NickName);
