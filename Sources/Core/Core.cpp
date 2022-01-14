@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Core.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 15:55:20 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/28 15:53:15 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2022/01/14 17:01:28 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	Core::parsingParams(const string port, const string password, const string 
 
 void	Core::registerCommands()
 {
-
 	this->_command_runner.addCommand("USER", cmdUSER);
 	this->_command_runner.addCommand("NICK", cmdNICK);
 	this->_command_runner.addCommand("PING", cmdPING);

@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:03:04 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/27 15:56:46 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2022/01/14 15:13:16 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ class Chanel
 	private:
 		// Chanel(const Chanel &rhs);
 		// Chanel		&operator=(const Chanel &rhs);
-	public:
 		Chanel();
+	public:
 		Chanel (string name, Connection *connection);
 		Chanel (string name, Connection *connection, string pass);
 		~Chanel();
