@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+         #
+#    By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/03 15:18:41 by fgalaup           #+#    #+#              #
-#    Updated: 2021/08/28 10:10:26 by seruiz           ###   ########lyon.fr    #
+#    Updated: 2022/01/17 13:32:46 by fgalaup          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ HEADERS_FILES	:=	IRC.hpp \
 					Core/Core.hpp \
 					Core/Logging.hpp \
 					Core/ConnectionManager.hpp \
+					/Bot/Bot.hpp \
 					Resources/Chanel.hpp \
 					Resources/Client.hpp \
 					Resources/Message.hpp \
@@ -42,6 +43,7 @@ HEADERS_FILES	:=	IRC.hpp \
 SOURCE_FILES	:=	Core/Core.cpp \
 					Core/Logging.cpp \
 					Core/ConnectionManager.cpp \
+					Bot/Bot.cpp \
 					Resources/Commands.cpp \
 					Resources/Chanel.cpp \
 					Resources/Client.cpp \

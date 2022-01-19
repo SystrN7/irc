@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   Commands.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 17:52:45 by fgalaup           #+#    #+#             */
-/*   Updated: 2021/08/27 17:12:08 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2022/01/17 15:25:50 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 #include <string>
 #include <map>
+
 #include "Request.hpp"
 #include "Responce.hpp"
 #include "Core/ConnectionManager.hpp"
 #include "Chanel.hpp"
+
 using namespace std;
 
 typedef struct	s_command_context
@@ -56,3 +58,5 @@ class Commands
 		void		setContext(command_context context) { this->_context = context; }
 		Responce	*ExecCommand(Request *request);
 };
+
+#include "Bot/Bot.hpp"

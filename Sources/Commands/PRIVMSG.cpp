@@ -5,8 +5,6 @@
 
 Responce *cmdPRIVMSG(Request	*request, command_context context)
 {
-	(void)context;
-	(void)request;
 	string	responsestr;
 
 	string	message;
@@ -30,9 +28,8 @@ Responce *cmdPRIVMSG(Request	*request, command_context context)
 	{
 		if (ChanName == "tob" || ChanName == "Tob")
 		{
-			responsestr = ":Tob!~Tob@localhost PRIVMSG " + request->getConnection().getClient().getNickname() + " :" + "Hello I am tob the bot !" + "\n";
-			Responce *responce = new Responce(request->getConnection(), responsestr);
-			context.connection_list->addResponceToSendQueue(responce);
+			string botMessage = SentMessage.substr(SentMessage.find_first_of(":")+1);
+			BotCommands(context, request, botMessage);
 		}
 		else
 		{

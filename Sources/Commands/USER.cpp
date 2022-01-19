@@ -37,6 +37,8 @@ Responce *cmdUSER(Request	*request, command_context context)
 	else
 		responsestr = ":localhost 462 " + request->getConnection().getClient().getNickname() + " :Connection already registered\n";
 
+
+	BotSendMsg(context, request, "Hello i'am the Tob bot you cant interact with me. To get list of interaction type 'help'.");
 	Responce *responce = new Responce(request->getConnection(), responsestr);
 	return (responce);
 }
