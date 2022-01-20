@@ -2,6 +2,8 @@
 
 //ERROR :Access denied: Bad password?
 
+bool	usernameExist(list<Connection *> &connection_list, string &username);
+
 Responce *cmdUSER(Request	*request, command_context context)
 {
 	(void)context;
@@ -29,16 +31,34 @@ Responce *cmdUSER(Request	*request, command_context context)
 		Responce *responce = new Responce(request->getConnection(), responsestr, true);
 		return (responce);
 	}
-	else if (request->getConnection().getClient().getUserName().length() == 0 && username == request->getConnection().getClient().getNickname())
+	else if
+	(
+		request->getConnection().getClient().getUserName().length() == 0 &&
+		username == request->getConnection().getClient().getNickname() &&
+		!usernameExist(context.connection_list->getConnectionList(), username)
+	)
 	{
 		responsestr = ":localhost 001 " + request->getConnection().getClient().getNickname() +  " :Welcome to the Internet Relay Network " + request->getConnection().getClient().getNickname() + "!\n";
 		request->getConnection().getClient().setUserName(username);
+		BotSendMsg(context, request, "Hello i'am the Tob bot you cant interact with me. To get list of interaction type 'help'.");
 	}
 	else
 		responsestr = ":localhost 462 " + request->getConnection().getClient().getNickname() + " :Connection already registered\n";
 
 
-	BotSendMsg(context, request, "Hello i'am the Tob bot you cant interact with me. To get list of interaction type 'help'.");
 	Responce *responce = new Responce(request->getConnection(), responsestr);
 	return (responce);
+}
+
+bool	usernameExist(list<Connection *> &connection_list, string &username)
+{
+	list<Connection *>::iterator it = connection_list.begin();
+	while (it != connection_list.end())
+	{
+		if ((*it)->getClient().getUserName() == username)
+			return (true);
+		it++;
+	}
+	
+	return (false);
 }

@@ -51,10 +51,10 @@ void	BotCommandHelp(command_context &context, Request *request)
 	BotSendMsg(context, request, " - 'help' : Show this message.");
 	BotSendMsg(context, request, " - 'user-count' : Show number of user connected to server.");
 	BotSendMsg(context, request, " - 'user-list' : Show list username of user connected to server.");
-	BotSendMsg(context, request, " - 'chanel-user-count chan_name' : Show number of user connected to a specific chanel.");
-	BotSendMsg(context, request, " - 'chanel-user-list  chan_name' : Show list username of user connected to chanel.");
-	BotSendMsg(context, request, " - 'tell-me-a-joke' : ");
-	BotSendMsg(context, request, " - 'learn-me-a-joke' : ");
+	BotSendMsg(context, request, " - 'chanel-user-count $chan_name' : Show number of user connected to a specific chanel.");
+	BotSendMsg(context, request, " - 'chanel-user-list  $chan_name' : Show list username of user connected to chanel.");
+	BotSendMsg(context, request, " - 'tell-me-a-joke' : The bot just tell you a joke.");
+	BotSendMsg(context, request, " - 'learn-me-a-joke $the joke' : Learn me a joke.");
 }
 
 void	BotCommandUserCount(command_context &context, Request *request)
@@ -79,7 +79,7 @@ void	BotCommandUserList(command_context &context, Request *request)
 	{
 		if ((*it)->getClient().getUserName().size() != 0)
 			BotSendMsg(context, request, " - " + (*it)->getClient().getNickname());
-			it++;
+		it++;
 	}
 }
 
