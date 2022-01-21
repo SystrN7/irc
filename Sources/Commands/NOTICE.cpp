@@ -43,5 +43,38 @@ Responce *cmdNOTICE(Request	*request, command_context context)
 			itusr++;
 		}
 	}
+		else
+	{
+		map<string, Chanel>::iterator it;
+		map<Connection *, bool>::iterator it2;
+		map<Connection *, bool>::iterator itIsIn;
+		it = context.chanels->find(TargetName);
+		if (it != context.chanels->end())
+		{
+			map<Connection *, bool>		map = it->second.getMap();
+			cout << "Context map size = " << map.size() << endl;
+			itIsIn = map.find(&request->getConnection());
+			if (itIsIn != map.end())
+			{
+				it2 = map.begin();
+				while (it2 != map.end())
+				{
+					if (&request->getConnection() != it2->first)
+					{
+						responsestr = ":" + request->getConnection().getClient().getUserName() + "!~" + request->getConnection().getClient().getUserName() + "@localhost NOTICE " + TargetName + " " + rest + "\n";
+						Responce *responce = new Responce(*it2->first, responsestr);
+						context.connection_list->addResponceToSendQueue(responce);
+					}
+					it2++;
+				}
+			}
+			else
+			{
+				responsestr = ":localhost 401 " + request->getConnection().getClient().getUserName() + " " + TargetName + " :No such nick or channel name\n";
+				Responce *responce = new Responce(request->getConnection(), responsestr);
+				return (responce);
+			}
+		}
+	}
 	return (NULL);
 }
