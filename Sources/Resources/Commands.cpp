@@ -6,7 +6,7 @@
 /*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 11:23:50 by seruiz            #+#    #+#             */
-/*   Updated: 2022/01/21 11:57:07 by fgalaup          ###   ########lyon.fr   */
+/*   Updated: 2022/01/21 13:33:52 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ Responce	*Commands::ExecCommand(Request *request)
 
 	if (request->getConnection().getClient().getUserName().size() == 0)
 		if (command_name != "NICK" && command_name != "USER" && command_name != "PASS")
-			return (new Responce(request->getConnection(), ":localhost 395 :Nobody logged in."));
+			return (new Responce(request->getConnection(), ":localhost 395 :Nobody logged in.\n"));
 
 	map<string, CommandFunction>::iterator it = this->_commands_list.find(command_name);
 	if (it == this->_commands_list.end())
