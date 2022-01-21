@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Commands.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seruiz <seruiz@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: fgalaup <fgalaup@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 11:23:50 by seruiz            #+#    #+#             */
-/*   Updated: 2021/08/27 15:48:49 by seruiz           ###   ########lyon.fr   */
+/*   Updated: 2022/01/21 11:57:07 by fgalaup          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ Responce	*Commands::ExecCommand(Request *request)
 
 	if (command_name == message)
 		command_name = command_name.substr(0, command_name.size()-2);
+
+	if (request->getConnection().getClient().getUserName().size() == 0)
+		if (command_name != "NICK" && command_name != "USER" && command_name != "PASS")
+			return (new Responce(request->getConnection(), ":localhost 395 :Nobody logged in."));
+
 	map<string, CommandFunction>::iterator it = this->_commands_list.find(command_name);
 	if (it == this->_commands_list.end())
 	{
