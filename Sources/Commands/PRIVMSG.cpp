@@ -33,7 +33,7 @@ Responce *cmdPRIVMSG(Request	*request, command_context context)
 		}
 		else
 		{
-			responsestr = ":" + request->getConnection().getClient().getUserName() + "!~" + request->getConnection().getClient().getNickname() + "@localhost PRIVMSG " + SentMessage + "\n";
+			responsestr = ":" + request->getConnection().getClient().getUserName() + "!~" + request->getConnection().getClient().getUserName() + "@localhost PRIVMSG " + SentMessage + "\n";
 			list<Connection *>	connectionList = context.connection_list->getConnectionList();
 			list<Connection *>::iterator itusr = connectionList.begin();
 			while (itusr != connectionList.end())
@@ -65,7 +65,7 @@ Responce *cmdPRIVMSG(Request	*request, command_context context)
 				{
 					if (&request->getConnection() != it2->first)
 					{
-						responsestr = ":" + request->getConnection().getClient().getUserName() + "!~" + request->getConnection().getClient().getNickname() + "@localhost PRIVMSG " + SentMessage + "\n";
+						responsestr = ":" + request->getConnection().getClient().getUserName() + "!~" + request->getConnection().getClient().getUserName() + "@localhost PRIVMSG " + SentMessage + "\n";
 						Responce *responce = new Responce(*it2->first, responsestr);
 						context.connection_list->addResponceToSendQueue(responce);
 					}

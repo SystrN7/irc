@@ -39,7 +39,7 @@ Responce *cmdJOIN(Request	*request, command_context context)
 		{
 			//Le mdp est le bon
 			it->second.AddClient(&request->getConnection());
-			responsestr = ":" + request->getConnection().getClient().getUserName() + "!~" + request->getConnection().getClient().getNickname() + "@localhost JOIN :" + ChanName + "\n";
+			responsestr = ":" + request->getConnection().getClient().getUserName() + "!~" + request->getConnection().getClient().getUserName() + "@localhost JOIN :" + ChanName + "\n";
 		
 			map<string, Chanel>::iterator it;
 			map<Connection *, bool>::iterator it2;
@@ -75,7 +75,7 @@ Responce *cmdJOIN(Request	*request, command_context context)
 		{
 			context.chanels->insert ( pair<string,Chanel>(ChanName, Chanel(ChanName, &(request->getConnection())) ));
 		}
-		responsestr = ":" + request->getConnection().getClient().getUserName() + "!~" + request->getConnection().getClient().getNickname() + "@localhost JOIN :" + ChanName + "\n";
+		responsestr = ":" + request->getConnection().getClient().getUserName() + "!~" + request->getConnection().getClient().getUserName() + "@localhost JOIN :" + ChanName + "\n";
 	}
 
 	Responce *responce = new Responce(request->getConnection(), responsestr);

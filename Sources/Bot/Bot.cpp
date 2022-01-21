@@ -78,7 +78,7 @@ void	BotCommandUserList(command_context &context, Request *request)
 	while (it != context.connection_list->getConnectionList().end())
 	{
 		if ((*it)->getClient().getUserName().size() != 0)
-			BotSendMsg(context, request, " - " + (*it)->getClient().getNickname());
+			BotSendMsg(context, request, " - " + (*it)->getClient().getUserName());
 		it++;
 	}
 }
@@ -125,7 +125,7 @@ void	BotCommandChanelUserList(command_context &context, Request *request, string
 		while (it != chanel->getMap().end())
 		{
 			if ((it->first)->getClient().getUserName().size() != 0)
-				BotSendMsg(context, request, " - " + (it->first)->getClient().getNickname());
+				BotSendMsg(context, request, " - " + (it->first)->getClient().getUserName());
 			it++;
 		}
 	}
@@ -166,6 +166,6 @@ void	BotCommandLearnJoke(command_context &context, Request *request, string &jok
 // Utilities
 void	BotSendMsg(command_context &context, Request *request, const string &messages)
 {
-	string messagesIrc = ":Tob!~Tob@localhost PRIVMSG " + request->getConnection().getClient().getNickname() + " :" + messages + "\n";
+	string messagesIrc = ":Tob!~Tob@localhost PRIVMSG " + request->getConnection().getClient().getUserName() + " :" + messages + "\n";
 	context.connection_list->addResponceToSendQueue(new Responce(request->getConnection(), messagesIrc));
 }

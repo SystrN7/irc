@@ -48,7 +48,7 @@ Responce *cmdKICK(Request	*request, command_context context)
 				{
 					if (it2->first->getClient().getUserName() == TargetName)
 						it->second.RemoveClient(it2->first);
-					responsestr = ":" + request->getConnection().getClient().getUserName() + "!~" + request->getConnection().getClient().getNickname() + "@localhost KICK " + ChanName + " " + TargetName + " " + rest + "\n";
+					responsestr = ":" + request->getConnection().getClient().getUserName() + "!~" + request->getConnection().getClient().getUserName() + "@localhost KICK " + ChanName + " " + TargetName + " " + rest + "\n";
 					Responce *responce = new Responce(*it2->first, responsestr);
 					context.connection_list->addResponceToSendQueue(responce);
 					it2++;

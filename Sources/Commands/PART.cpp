@@ -32,7 +32,7 @@ Responce *cmdPART(Request	*request, command_context context)
 	it = context.chanels->find(ChanName);
 	if (it != context.chanels->end())
 	{
-		responsestr = ":" + request->getConnection().getClient().getUserName() + "!~" + request->getConnection().getClient().getNickname() + "@localhost PART " + ChanName + " :\n";
+		responsestr = ":" + request->getConnection().getClient().getUserName() + "!~" + request->getConnection().getClient().getUserName() + "@localhost PART " + ChanName + " :\n";
 		map<string, Chanel>::iterator it;
 		map<Connection *, bool>::iterator it2;
 		it = context.chanels->find(ChanName);

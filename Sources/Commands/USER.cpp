@@ -39,7 +39,7 @@ Responce *cmdUSER(Request	*request, command_context context)
 	)
 	{
 		request->getConnection().getClient().setUserName(username);
-		responsestr = ":localhost 001 " + request->getConnection().getClient().getUserName() +  " :Welcome to the Internet Relay Network " + request->getConnection().getClient().getNickname() + "!\n";
+		responsestr = ":localhost 001 " + request->getConnection().getClient().getUserName() +  " :Welcome to the Internet Relay Network " + request->getConnection().getClient().getUserName() + "!\n";
 		BotSendMsg(context, request, "Hello i'am the Tob bot you cant interact with me. To get list of interaction type 'help'.");
 	}
 	else
