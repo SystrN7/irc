@@ -6,7 +6,7 @@ Responce *cmdPING(Request	*request, command_context context)
 	string responsestr;
 
 	//:irc.example.net PONG irc.example.net :localhost
-	responsestr = ":localhost PONG " + request->getConnection().getClient().getNickname() +  "\n";
+	responsestr = ":localhost PONG " + request->getConnection().getClient().getUserName() +  "\n";
 
 	Responce *responce = new Responce(request->getConnection(), responsestr);
 	return (responce);

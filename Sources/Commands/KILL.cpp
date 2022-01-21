@@ -15,7 +15,7 @@ Responce *cmdKILL(Request	*request, command_context context)
 
 	if (request->getConnection().getClient().getIsOperator() == false)
 	{
-		responsestr = ":localhost 482 " + request->getConnection().getClient().getNickname() + " " + ChanName + " :Your privileges are too low\n";
+		responsestr = ":localhost 482 " + request->getConnection().getClient().getUserName() + " " + ChanName + " :Your privileges are too low\n";
 		Responce *responce = new Responce(request->getConnection(), responsestr);
 		return (responce);
 	}
@@ -36,9 +36,9 @@ Responce *cmdKILL(Request	*request, command_context context)
 	it = connectionList.begin();
 	while (it != connectionList.end())
 	{
-		if ((*it)->getClient().getNickname() == TargetName)
+		if ((*it)->getClient().getUserName() == TargetName)
 		{
-			responsestr = "ERROR :KILLed by " + request->getConnection().getClient().getNickname() + " " + reason +"\n";
+			responsestr = "ERROR :KILLed by " + request->getConnection().getClient().getUserName() + " " + reason +"\n";
 			Responce *responce = new Responce((**it), responsestr, true);
 			context.connection_list->addResponceToSendQueue(responce);
 		}

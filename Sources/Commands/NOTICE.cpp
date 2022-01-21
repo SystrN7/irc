@@ -29,13 +29,13 @@ Responce *cmdNOTICE(Request	*request, command_context context)
 
 	if (TargetName.at(0) != '#')
 	{
-		responsestr = ":" + request->getConnection().getClient().getNickname() + "!~" + request->getConnection().getClient().getNickname() + "@localhost NOTICE " + TargetName + " " + rest + "\n";
+		responsestr = ":" + request->getConnection().getClient().getUserName() + "!~" + request->getConnection().getClient().getNickname() + "@localhost NOTICE " + TargetName + " " + rest + "\n";
 		
 		list<Connection *>	connectionList = context.connection_list->getConnectionList();
 		list<Connection *>::iterator itusr = connectionList.begin();
 		while (itusr != connectionList.end())
 		{
-			if ((*itusr)->getClient().getNickname() == TargetName)
+			if ((*itusr)->getClient().getUserName() == TargetName)
 			{
 				Responce *responce = new Responce(**itusr, responsestr);
 				return (responce);

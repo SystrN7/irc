@@ -25,7 +25,7 @@ Responce *cmdJOIN(Request	*request, command_context context)
 
 	if (ChanName.length() == 0 || ChanName.at(0) != '#')
 	{
-		responsestr = ":localhost 403 " + request->getConnection().getClient().getNickname() +  " :No such nick/channel\n";
+		responsestr = ":localhost 403 " + request->getConnection().getClient().getUserName() +  " :No such nick/channel\n";
 		Responce *responce = new Responce(request->getConnection(), responsestr);
 		return (responce);
 	}
@@ -39,7 +39,7 @@ Responce *cmdJOIN(Request	*request, command_context context)
 		{
 			//Le mdp est le bon
 			it->second.AddClient(&request->getConnection());
-			responsestr = ":" + request->getConnection().getClient().getNickname() + "!~" + request->getConnection().getClient().getNickname() + "@localhost JOIN :" + ChanName + "\n";
+			responsestr = ":" + request->getConnection().getClient().getUserName() + "!~" + request->getConnection().getClient().getNickname() + "@localhost JOIN :" + ChanName + "\n";
 		
 			map<string, Chanel>::iterator it;
 			map<Connection *, bool>::iterator it2;
@@ -61,7 +61,7 @@ Responce *cmdJOIN(Request	*request, command_context context)
 			}
 		}
 		else
-			responsestr = ":localhost 475 " + request->getConnection().getClient().getNickname() +  " :Cannot join channel (+k)\n";
+			responsestr = ":localhost 475 " + request->getConnection().getClient().getUserName() +  " :Cannot join channel (+k)\n";
 	}
 
 	else
@@ -75,7 +75,7 @@ Responce *cmdJOIN(Request	*request, command_context context)
 		{
 			context.chanels->insert ( pair<string,Chanel>(ChanName, Chanel(ChanName, &(request->getConnection())) ));
 		}
-		responsestr = ":" + request->getConnection().getClient().getNickname() + "!~" + request->getConnection().getClient().getNickname() + "@localhost JOIN :" + ChanName + "\n";
+		responsestr = ":" + request->getConnection().getClient().getUserName() + "!~" + request->getConnection().getClient().getNickname() + "@localhost JOIN :" + ChanName + "\n";
 	}
 
 	Responce *responce = new Responce(request->getConnection(), responsestr);

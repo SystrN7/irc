@@ -15,7 +15,7 @@ Responce *cmdPASS(Request	*request, command_context context)
 
 	if (request->getConnection().getClient().getIsIdentified() == true || request->getConnection().getClient().getUserName().length() != 0)
 	{
-		responsestr = ":localhost 462 " + request->getConnection().getClient().getNickname() + " :Connection already registered\n";
+		responsestr = ":localhost 462 " + request->getConnection().getClient().getUserName() + " :Connection already registered\n";
 		Responce *responce = new Responce(request->getConnection(), responsestr);
 		return (responce);
 	}

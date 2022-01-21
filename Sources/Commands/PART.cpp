@@ -23,7 +23,7 @@ Responce *cmdPART(Request	*request, command_context context)
 
 	if (ChanName.at(0) != '#')
 	{
-		responsestr = ":localhost 403 " + request->getConnection().getClient().getNickname() +  " :No such nick/channel\n";
+		responsestr = ":localhost 403 " + request->getConnection().getClient().getUserName() +  " :No such nick/channel\n";
 		Responce *responce = new Responce(request->getConnection(), responsestr);
 		return (responce);
 	}
@@ -32,7 +32,7 @@ Responce *cmdPART(Request	*request, command_context context)
 	it = context.chanels->find(ChanName);
 	if (it != context.chanels->end())
 	{
-		responsestr = ":" + request->getConnection().getClient().getNickname() + "!~" + request->getConnection().getClient().getNickname() + "@localhost PART " + ChanName + " :\n";
+		responsestr = ":" + request->getConnection().getClient().getUserName() + "!~" + request->getConnection().getClient().getNickname() + "@localhost PART " + ChanName + " :\n";
 		map<string, Chanel>::iterator it;
 		map<Connection *, bool>::iterator it2;
 		it = context.chanels->find(ChanName);
@@ -55,7 +55,7 @@ Responce *cmdPART(Request	*request, command_context context)
 			}
 		}
 		else
-			responsestr = ":localhost 403 " + request->getConnection().getClient().getNickname() +  " :No such nick/channel\n";
+			responsestr = ":localhost 403 " + request->getConnection().getClient().getUserName() +  " :No such nick/channel\n";
 	}
 
 	Responce *responce = new Responce(request->getConnection(), responsestr);

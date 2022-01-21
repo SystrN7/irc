@@ -46,9 +46,9 @@ Responce *cmdKICK(Request	*request, command_context context)
 				it2 = map.begin();
 				while (it2 != map.end())
 				{
-					if (it2->first->getClient().getNickname() == TargetName)
+					if (it2->first->getClient().getUserName() == TargetName)
 						it->second.RemoveClient(it2->first);
-					responsestr = ":" + request->getConnection().getClient().getNickname() + "!~" + request->getConnection().getClient().getNickname() + "@localhost KICK " + ChanName + " " + TargetName + " " + rest + "\n";
+					responsestr = ":" + request->getConnection().getClient().getUserName() + "!~" + request->getConnection().getClient().getNickname() + "@localhost KICK " + ChanName + " " + TargetName + " " + rest + "\n";
 					Responce *responce = new Responce(*it2->first, responsestr);
 					context.connection_list->addResponceToSendQueue(responce);
 					it2++;
@@ -56,14 +56,14 @@ Responce *cmdKICK(Request	*request, command_context context)
 			}
 			else
 			{
-				responsestr = ":localhost 482 " + request->getConnection().getClient().getNickname() + " " + ChanName + " :Your privileges are too low\n";
+				responsestr = ":localhost 482 " + request->getConnection().getClient().getUserName() + " " + ChanName + " :Your privileges are too low\n";
 				Responce *responce = new Responce(request->getConnection(), responsestr);
 				return (responce);
 			}
 		}
 		else
 		{
-			responsestr = ":localhost 401 " + request->getConnection().getClient().getNickname() + " " + ChanName + " :No such nick or channel name\n";
+			responsestr = ":localhost 401 " + request->getConnection().getClient().getUserName() + " " + ChanName + " :No such nick or channel name\n";
 			Responce *responce = new Responce(request->getConnection(), responsestr);
 			return (responce);
 		}
