@@ -38,7 +38,7 @@ void	BotCommands(command_context &context, Request *request, string &message)
 		BotCommandChanelUserCount(context, request, args);
 	else if (command == "tell-me-a-joke")
 		BotCommandTellJoke(context, request);
-	else if (command == "learn-me-a-joke")
+	else if (command == "teach-me-a-joke")
 		BotCommandLearnJoke(context, request, args);
 	else
 		BotSendMsg(context, request, "Hello I'am Tob the Bot type 'help' to get command list !");
@@ -47,14 +47,14 @@ void	BotCommands(command_context &context, Request *request, string &message)
 // Commands
 void	BotCommandHelp(command_context &context, Request *request)
 {
-	BotSendMsg(context, request, "This is Tob Manual :");
-	BotSendMsg(context, request, " - 'help' : Show this message.");
-	BotSendMsg(context, request, " - 'user-count' : Show number of user connected to server.");
-	BotSendMsg(context, request, " - 'user-list' : Show list username of user connected to server.");
-	BotSendMsg(context, request, " - 'chanel-user-count $chan_name' : Show number of user connected to a specific chanel.");
-	BotSendMsg(context, request, " - 'chanel-user-list  $chan_name' : Show list username of user connected to chanel.");
-	BotSendMsg(context, request, " - 'tell-me-a-joke' : The bot just tell you a joke.");
-	BotSendMsg(context, request, " - 'learn-me-a-joke $the joke' : Learn me a joke.");
+	BotSendMsg(context, request, "Here is Tob user guide ! (My user guide) :");
+	BotSendMsg(context, request, " - 'help' : Just what I told you.. Are you dumb?");
+	BotSendMsg(context, request, " - 'user-count' : I'll show the number of user connected to server.");
+	BotSendMsg(context, request, " - 'user-list' : I'll show a list username of user connected to server.");
+	BotSendMsg(context, request, " - 'chanel-user-count $chan_name' : I'll show the number of user connected to a specific chanel.");
+	BotSendMsg(context, request, " - 'chanel-user-list  $chan_name' : I'll show a list username of user connected to chanel.");
+	BotSendMsg(context, request, " - 'tell-me-a-joke' : I'll just tell you good a joke.");
+	BotSendMsg(context, request, " - 'teach-me-a-joke $the joke' : You can teach me a joke.");
 }
 
 void	BotCommandUserCount(command_context &context, Request *request)
